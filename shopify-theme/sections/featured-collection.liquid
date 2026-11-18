@@ -1,0 +1,42 @@
+{%- liquid
+  assign col = section.settings.collection
+  if col == blank
+    assign col = collections.all
+  endif
+  assign types = col.products | map: 'type' | uniq
+-%}
+<section id="shop" class="shop">
+  <div class="section-head">
+    <h2>{{ section.settings.title }}</h2>
+    {%- if section.settings.show_filters and types.size > 1 -%}
+    <div class="filters" data-filters>
+      <button type="button" class="chip on" data-cat="">الكل</button>
+      {%- for t in types -%}{%- if t != blank -%}<button type="button" class="chip" data-cat="{{ t | escape }}">{{ t }}</button>{%- endif -%}{%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+  <div class="grid">
+    {%- for product in col.products limit: section.settings.limit -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        <article class="card"><div class="media">{{ 'apparel-1' | placeholder_svg_tag: 'ph' }}</div><div class="info"><h3>اسم المنتج</h3><div class="price"><b>{{ 54900 | money }}</b></div></div></article>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.collection != blank and col.products_count > section.settings.limit -%}
+    <div class="center"><a class="btn btn-outline" href="{{ col.url }}">شوف الكل</a></div>
+  {%- endif -%}
+</section>
+{% schema %}
+{
+  "name": "المنتجات",
+  "settings": [
+    { "type": "text", "id": "title", "label": "العنوان", "default": "المتجر" },
+    { "type": "collection", "id": "collection", "label": "الكولكشن", "info": "لو سبتها فاضية هتظهر كل المنتجات" },
+    { "type": "range", "id": "limit", "label": "عدد المنتجات", "min": 4, "max": 48, "step": 4, "default": 16 },
+    { "type": "checkbox", "id": "show_filters", "label": "اظهر فلتر الأنواع (حسب Product type)", "default": true }
+  ],
+  "presets": [ { "name": "المنتجات" } ]
+}
+{% endschema %}

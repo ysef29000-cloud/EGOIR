@@ -1,0 +1,46 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign opt = product.options_with_values.first
+-%}
+<article class="card" data-product data-type="{{ product.type | escape }}">
+  <a class="media" href="{{ product.url }}">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 50vw, 25vw', widths: '360,540,800', alt: product.title }}
+    {%- else -%}
+      {{ 'apparel-1' | placeholder_svg_tag: 'ph' }}
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="badge">نفد</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      <span class="badge hot">خصم {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+    {%- elsif product.tags contains 'best-seller' -%}
+      <span class="badge">الأكثر مبيعاً</span>
+    {%- endif -%}
+    {% render 'stock-note', product: product %}
+  </a>
+  <div class="info">
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {% render 'price', product: product %}
+    {%- unless product.has_only_default_variant -%}
+      <div class="sizes" role="radiogroup" aria-label="{{ opt.name | escape }}">
+        {%- for value in opt.values -%}
+          {%- liquid
+            assign avail = false
+            for x in product.variants
+              if x.option1 == value and x.available
+                assign avail = true
+                break
+              endif
+            endfor
+          -%}
+          <button type="button" class="size{% if value == v.option1 %} on{% endif %}" data-opt="0" data-value="{{ value | escape }}" {% unless avail %}disabled{% endunless %}>{{ value }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endunless -%}
+    <div class="actions">
+      <a class="btn btn-dark{% unless product.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">اطلب الآن</a>
+      <button type="button" class="add" data-add data-id="{{ v.id }}" aria-label="أضف للسلة" {% unless product.available %}disabled{% endunless %}>+</button>
+    </div>
+  </div>
+  {% render 'variant-data', product: product %}
+</article>

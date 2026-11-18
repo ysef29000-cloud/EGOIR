@@ -1,0 +1,37 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "EGOIR",
+    "theme_version": "1.0.0",
+    "theme_author": "EGOIR",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "الألوان",
+    "settings": [
+      { "type": "color", "id": "accent_color", "label": "لون مميز (العروض والخصومات)", "default": "#c8452c" },
+      { "type": "color", "id": "ink_color", "label": "اللون الأساسي (الأزرار والنصوص)", "default": "#0e0e0e" },
+      { "type": "color", "id": "paper_color", "label": "لون الخلفية", "default": "#f6f3ee" },
+      { "type": "image_picker", "id": "favicon", "label": "أيقونة المتصفح" }
+    ]
+  },
+  {
+    "name": "المبيعات",
+    "settings": [
+      { "type": "text", "id": "whatsapp", "label": "رقم الواتساب", "info": "بالصيغة الدولية، مثال: 201012345678" },
+      { "type": "number", "id": "free_shipping_over", "label": "شحن مجاني فوق مبلغ", "default": 1500, "info": "لازم تعمل نفس القاعدة في Settings ← Shipping. اكتب 0 لإخفاء شريط الشحن المجاني." },
+      { "type": "number", "id": "low_stock", "label": "اظهر (باقي X قطع) لما المخزون يقل عن", "default": 5 },
+      { "type": "text", "id": "offer_code", "label": "كود خصم يتطبق تلقائياً", "info": "اعمل الكود الأول من Discounts. بيتطبق لوحده في الشيك آوت لما السلة توصل للحد الأدنى." },
+      { "type": "number", "id": "offer_min", "label": "الحد الأدنى للكود", "default": 2000 }
+    ]
+  },
+  {
+    "name": "السوشيال",
+    "settings": [
+      { "type": "url", "id": "instagram", "label": "Instagram" },
+      { "type": "url", "id": "tiktok", "label": "TikTok" },
+      { "type": "url", "id": "facebook", "label": "Facebook" }
+    ]
+  }
+]

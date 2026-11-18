@@ -1,0 +1,12 @@
+{%- liquid
+  assign v = variant | default: product.selected_or_first_available_variant
+-%}
+<div class="price" data-price>
+  <b data-price-now>{{ v.price | money }}</b>
+  {%- if v.compare_at_price > v.price -%}
+    <s data-price-old>{{ v.compare_at_price | money }}</s>
+    <span class="save" data-price-save>وفّر {{ v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price }}%</span>
+  {%- else -%}
+    <s data-price-old hidden></s><span class="save" data-price-save hidden></span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,30 @@
+<section class="hero{% if section.settings.image != blank %} has-img{% endif %}">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2400 | image_tag: class: 'hero-img', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '800,1200,1800,2400' }}
+  {%- endif -%}
+  <div class="hero-inner">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1>{{ section.settings.title }} <span>{{ section.settings.title_accent }}</span></h1>
+    {%- if section.settings.text != blank -%}<p class="hero-sub">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero-cta">
+      <a href="{{ section.settings.button_link | default: '#shop' }}" class="btn btn-light">{{ section.settings.button_label }}</a>
+      {%- if section.settings.proof != blank -%}<span class="hero-proof">{{ section.settings.proof }}</span>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "الواجهة (Hero)",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "صورة الخلفية" },
+    { "type": "text", "id": "eyebrow", "label": "سطر صغير فوق العنوان", "default": "كولكشن الشتا 2026" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "لبس يعبّر" },
+    { "type": "text", "id": "title_accent", "label": "الكلمة الملوّنة", "default": "عنك." },
+    { "type": "textarea", "id": "text", "label": "الوصف", "default": "خامات تقيلة، قصّات أوفر سايز، وأسعار حقيقية. اطلب في ضغطتين وادفع عند الاستلام." },
+    { "type": "text", "id": "button_label", "label": "نص الزرار", "default": "تسوّق دلوقتي" },
+    { "type": "url", "id": "button_link", "label": "لينك الزرار" },
+    { "type": "text", "id": "proof", "label": "سطر ثقة جنب الزرار (اختياري)", "info": "اكتب أرقام حقيقية بس، مثال: ★ 4.8 من تقييمات عملاءنا" }
+  ],
+  "presets": [ { "name": "الواجهة (Hero)" } ]
+}
+{% endschema %}

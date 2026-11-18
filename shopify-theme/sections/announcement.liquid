@@ -1,0 +1,17 @@
+{%- if section.settings.text != blank -%}
+<div class="promo">
+  <span>{{ section.settings.text }}</span>
+  {%- if section.settings.code != blank -%}<button type="button" class="promo-code" data-copy="{{ section.settings.code | escape }}" title="اضغط للنسخ">{{ section.settings.code }}</button>{%- endif -%}
+  {%- if section.settings.ends_at != blank -%}<span class="timer" data-ends="{{ section.settings.ends_at | escape }}" hidden></span>{%- endif -%}
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "شريط العرض",
+  "settings": [
+    { "type": "text", "id": "text", "label": "نص العرض", "default": "خصم 15% على أي أوردر فوق 2000 ج.م — الكود" },
+    { "type": "text", "id": "code", "label": "الكود", "default": "EGO15" },
+    { "type": "text", "id": "ends_at", "label": "العرض بيخلص إمتى (اختياري)", "info": "بالصيغة 2026-11-30T23:59 — العداد بيظهر بس لو حطيت تاريخ حقيقي، وبيختفي لوحده لما يخلص." }
+  ]
+}
+{% endschema %}

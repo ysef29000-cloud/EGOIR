@@ -1,0 +1,18 @@
+<footer class="footer">
+  <div class="logo">{{ shop.name }}</div>
+  {%- if section.settings.menu.links.size > 0 -%}
+  <div class="footer-links">{%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</div>
+  {%- endif -%}
+  <div class="footer-links">
+    {%- if settings.instagram != blank -%}<a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+    {%- if settings.tiktok != blank -%}<a href="{{ settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+    {%- if settings.facebook != blank -%}<a href="{{ settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+  </div>
+  <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}. كل الحقوق محفوظة.</small>
+</footer>
+{% schema %}
+{
+  "name": "الفوتر",
+  "settings": [ { "type": "link_list", "id": "menu", "label": "القائمة", "default": "footer" } ]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": {} },
+    "trust": {
+      "type": "trust",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "title": "💵 الدفع عند الاستلام", "text": "كل محافظات مصر" } },
+        "t2": { "type": "item", "settings": { "title": "🚚 شحن سريع", "text": "2-4 أيام • مجاني فوق 1500 ج.م" } },
+        "t3": { "type": "item", "settings": { "title": "🔁 تبديل مجاني", "text": "خلال 14 يوم" } },
+        "t4": { "type": "item", "settings": { "title": "✅ جودة مضمونة", "text": "أو فلوسك ترجعلك" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "shop": { "type": "featured-collection", "settings": {} },
+    "reviews": { "type": "reviews", "settings": {} },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": { "type": "q", "settings": { "q": "الدفع إزاي؟", "a": "<p>كاش عند الاستلام في كل محافظات مصر.</p>" } },
+        "f2": { "type": "q", "settings": { "q": "الشحن بياخد قد إيه؟", "a": "<p>من 2 لـ 4 أيام عمل، وشحن مجاني للأوردرات فوق 1500 ج.م.</p>" } },
+        "f3": { "type": "q", "settings": { "q": "لو المقاس مش مظبوط؟", "a": "<p>تبديل أو استرجاع مجاني خلال 14 يوم.</p>" } },
+        "f4": { "type": "q", "settings": { "q": "أعرف مقاسي إزاي؟", "a": "<p>افتح \"دليل المقاسات\" جوه أي منتج، ولو محتار كلمنا واتساب.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"]
+    }
+  },
+  "order": ["hero", "trust", "shop", "reviews", "faq"]
+}

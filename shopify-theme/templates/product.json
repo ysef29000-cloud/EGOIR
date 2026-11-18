@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "b1": { "type": "point", "settings": { "text": "💵 ادفع كاش عند الاستلام" } },
+        "b2": { "type": "point", "settings": { "text": "🚚 يوصلك خلال 2-4 أيام" } },
+        "b3": { "type": "point", "settings": { "text": "🔁 تبديل واسترجاع مجاني خلال 14 يوم" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {}
+    },
+    "related": { "type": "featured-collection", "settings": { "title": "ممكن يعجبك كمان", "limit": 4, "show_filters": false } }
+  },
+  "order": ["main", "related"]
+}

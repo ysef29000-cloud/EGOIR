@@ -1,0 +1,11 @@
+<section class="shop">
+  <div class="section-head"><h1>{{ collection.title }}</h1></div>
+  {%- if collection.description != blank -%}<div class="rte muted">{{ collection.description }}</div>{%- endif -%}
+  {%- paginate collection.products by 24 -%}
+    <div class="grid">
+      {%- for product in collection.products -%}{% render 'product-card', product: product %}{%- else -%}<p class="empty">مفيش منتجات هنا لسه.</p>{%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<div class="center pager">{{ paginate | default_pagination: next: 'التالي', previous: 'السابق' }}</div>{%- endif -%}
+  {%- endpaginate -%}
+</section>
+{% schema %}{ "name": "صفحة الكولكشن" }{% endschema %}

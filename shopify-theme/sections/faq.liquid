@@ -1,0 +1,19 @@
+<section class="faq">
+  <h2>{{ section.settings.title }}</h2>
+  {%- for block in section.blocks -%}
+    <details {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><div class="rte">{{ block.settings.a }}</div></details>
+  {%- endfor -%}
+</section>
+{% schema %}
+{
+  "name": "أسئلة متكررة",
+  "settings": [ { "type": "text", "id": "title", "label": "العنوان", "default": "أسئلة متكررة" } ],
+  "blocks": [
+    { "type": "q", "name": "سؤال", "settings": [
+      { "type": "text", "id": "q", "label": "السؤال", "default": "سؤال؟" },
+      { "type": "richtext", "id": "a", "label": "الإجابة", "default": "<p>الإجابة</p>" }
+    ] }
+  ],
+  "presets": [ { "name": "أسئلة متكررة" } ]
+}
+{% endschema %}

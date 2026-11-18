@@ -1,0 +1,27 @@
+<header class="header">
+  <a href="{{ routes.root_url }}" class="logo">
+    {%- if section.settings.logo != blank -%}
+      {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, height: section.settings.logo_height, style: 'width:auto' }}
+    {%- else -%}{{ shop.name }}{%- endif -%}
+  </a>
+  <nav class="nav">
+    {%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+  </nav>
+  <div class="header-icons">
+    <a href="{{ routes.search_url }}" class="icon-btn" aria-label="بحث"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></a>
+    <a href="{{ routes.cart_url }}" class="cart-btn" data-open-cart aria-label="السلة">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+    </a>
+  </div>
+</header>
+{% schema %}
+{
+  "name": "الهيدر",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "اللوجو" },
+    { "type": "range", "id": "logo_height", "label": "ارتفاع اللوجو", "min": 20, "max": 80, "step": 2, "unit": "px", "default": 32 },
+    { "type": "link_list", "id": "menu", "label": "القائمة", "default": "main-menu" }
+  ]
+}
+{% endschema %}

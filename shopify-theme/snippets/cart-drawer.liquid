@@ -1,0 +1,15 @@
+<div class="overlay" data-overlay></div>
+<aside class="drawer" id="cart-drawer" aria-label="السلة" aria-hidden="true">
+  <div class="drawer-head">
+    <h3>السلة</h3>
+    <button type="button" class="x" data-close aria-label="إغلاق">✕</button>
+  </div>
+  <div class="ship-bar" data-ship-bar></div>
+  <div class="cart-items" data-cart-items></div>
+  <div class="upsell" data-upsell></div>
+  <div class="drawer-foot">
+    <div class="row"><span>الإجمالي</span><b data-cart-total>{{ cart.total_price | money }}</b></div>
+    <a href="/checkout" class="btn btn-dark btn-block btn-big" data-checkout>إتمام الطلب — دفع عند الاستلام</a>
+    <p class="secure">🔒 دفع آمن • تبديل مجاني خلال 14 يوم</p>
+  </div>
+</aside>
