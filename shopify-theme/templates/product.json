@@ -3,14 +3,15 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "b1": { "type": "point", "settings": { "text": "💵 ادفع كاش عند الاستلام" } },
-        "b2": { "type": "point", "settings": { "text": "🚚 يوصلك خلال 2-4 أيام" } },
-        "b3": { "type": "point", "settings": { "text": "🔁 تبديل واسترجاع مجاني خلال 14 يوم" } }
+        "p1": { "type": "point", "settings": { "text": "Cash on delivery available" } },
+        "p2": { "type": "point", "settings": { "text": "Shipping 100 EGP all over Egypt" } },
+        "t1": { "type": "tab", "settings": { "title": "Shipping & delivery", "text": "<p>We ship all over Egypt for 100 EGP. Pay cash when your order arrives.</p>" } },
+        "t2": { "type": "tab", "settings": { "title": "Size guide", "text": "<p>S · M · L · XL — edit this tab with your measurements.</p>" } }
       },
-      "block_order": ["b1", "b2", "b3"],
+      "block_order": ["p1", "p2", "t1", "t2"],
       "settings": {}
     },
-    "related": { "type": "featured-collection", "settings": { "title": "ممكن يعجبك كمان", "limit": 4, "show_filters": false } }
+    "more": { "type": "featured-collection", "settings": { "title": "Shop all", "limit": 4, "columns": "2" } }
   },
-  "order": ["main", "related"]
+  "order": ["main", "more"]
 }

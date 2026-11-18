@@ -1,19 +1,19 @@
 <section class="shop">
-  <div class="section-head"><h1>بحث</h1></div>
-  <form action="{{ routes.search_url }}" method="get" class="coupon search-form">
-    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="دوّر على منتج..." aria-label="بحث">
+  <h1 class="section-title">Search</h1>
+  <form action="{{ routes.search_url }}" method="get" class="inline-form search-form">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products" aria-label="Search">
     <input type="hidden" name="type" value="product">
-    <button type="submit" class="btn btn-dark">بحث</button>
+    <button type="submit" class="btn btn-dark">Search</button>
   </form>
   {%- if search.performed -%}
     {%- paginate search.results by 24 -%}
-    <div class="grid">
+    <div class="grid cols-4">
       {%- for item in search.results -%}
         {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
-      {%- else -%}<p class="empty">مفيش نتايج لـ "{{ search.terms }}"</p>{%- endfor -%}
+      {%- else -%}<p class="empty">No results for "{{ search.terms }}".</p>{%- endfor -%}
     </div>
     {%- if paginate.pages > 1 -%}<div class="center pager">{{ paginate | default_pagination }}</div>{%- endif -%}
     {%- endpaginate -%}
   {%- endif -%}
 </section>
-{% schema %}{ "name": "البحث" }{% endschema %}
+{% schema %}{ "name": "Search" }{% endschema %}

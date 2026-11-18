@@ -1,0 +1,27 @@
+{%- comment -%}
+  Bundle box. Pass `partner` (the other set product) to use it inside the product page,
+  or `a` + `b` to build a standalone set (home page).
+{%- endcomment -%}
+{%- assign pct = settings.set_discount -%}
+<div class="set-box{% if a %} set-standalone{% endif %}" data-set>
+  <div class="set-head">
+    <span>{{ heading | default: 'Complete the set' }}</span>
+    {%- if pct > 0 -%}<span class="tag tag-inv">Save {{ pct }}%</span>{%- endif -%}
+  </div>
+  {%- if a -%}
+    {% render 'set-item', product: a %}
+    <div class="set-plus" aria-hidden="true">+</div>
+    {% render 'set-item', product: b %}
+  {%- else -%}
+    {% render 'set-item', product: partner %}
+  {%- endif -%}
+  <div class="set-total">
+    <span>Set price</span>
+    <span><s data-set-old></s> <b data-set-price></b></span>
+  </div>
+  <div class="set-actions">
+    <a class="btn btn-dark btn-block" data-set-buy href="{{ routes.cart_url }}">Buy the set</a>
+    <button type="button" class="btn btn-outline btn-block" data-set-add>Add set to bag</button>
+  </div>
+  {%- if pct > 0 -%}<p class="set-note">{{ pct }}% off both pieces. Mix any colours and sizes. Works for every hoodie + pants pair in your bag.</p>{%- endif -%}
+</div>

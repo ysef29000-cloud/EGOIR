@@ -1,8 +1,8 @@
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign show = false
-  if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity <= settings.low_stock
+  if settings.low_stock > 0 and v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity <= settings.low_stock
     assign show = true
   endif
 -%}
-<span class="stock" data-stock {% unless show %}hidden{% endunless %}>باقي <span data-stock-qty>{{ v.inventory_quantity }}</span> قطع بس!</span>
+<p class="stock" data-stock{% unless show %} hidden{% endunless %}>Only <span data-stock-qty>{{ v.inventory_quantity }}</span> left in this size</p>

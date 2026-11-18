@@ -1,7 +1,7 @@
 <section class="page-wrap">
-  <h1>{{ article.title }}</h1>
-  <small class="muted">{{ article.published_at | date: '%d/%m/%Y' }}</small>
-  {%- if article.image -%}{{ article.image | image_url: width: 1400 | image_tag: class: 'article-img', alt: article.title }}{%- endif -%}
+  <h1 class="section-title">{{ article.title }}</h1>
+  <p class="muted center-text">{{ article.published_at | date: '%b %d, %Y' }}</p>
+  {%- if article.image -%}{{ article.image | image_url: width: 1600 | image_tag: class: 'article-img', alt: article.title }}{%- endif -%}
   <div class="rte">{{ article.content }}</div>
 </section>
-{% schema %}{ "name": "مقال" }{% endschema %}
+{% schema %}{ "name": "Article" }{% endschema %}

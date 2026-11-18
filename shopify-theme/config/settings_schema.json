@@ -2,33 +2,32 @@
   {
     "name": "theme_info",
     "theme_name": "EGOIR",
-    "theme_version": "1.0.0",
+    "theme_version": "2.0.0",
     "theme_author": "EGOIR",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com"
   },
   {
-    "name": "الألوان",
+    "name": "The set (hoodie + pants)",
     "settings": [
-      { "type": "color", "id": "accent_color", "label": "لون مميز (العروض والخصومات)", "default": "#c8452c" },
-      { "type": "color", "id": "ink_color", "label": "اللون الأساسي (الأزرار والنصوص)", "default": "#0e0e0e" },
-      { "type": "color", "id": "paper_color", "label": "لون الخلفية", "default": "#f6f3ee" },
-      { "type": "image_picker", "id": "favicon", "label": "أيقونة المتصفح" }
+      { "type": "paragraph", "content": "Customers who buy one item are offered the other at a set discount. The discount itself must also be created in Discounts (see the README). Leave empty to use the products with handles egoir-hoodie and egoir-pants." },
+      { "type": "product", "id": "set_product_1", "label": "Set item 1 (hoodie)" },
+      { "type": "product", "id": "set_product_2", "label": "Set item 2 (pants)" },
+      { "type": "range", "id": "set_discount", "label": "Set discount", "min": 0, "max": 50, "step": 1, "unit": "%", "default": 20 }
     ]
   },
   {
-    "name": "المبيعات",
+    "name": "Sales",
     "settings": [
-      { "type": "text", "id": "whatsapp", "label": "رقم الواتساب", "info": "بالصيغة الدولية، مثال: 201012345678" },
-      { "type": "number", "id": "free_shipping_over", "label": "شحن مجاني فوق مبلغ", "default": 1500, "info": "لازم تعمل نفس القاعدة في Settings ← Shipping. اكتب 0 لإخفاء شريط الشحن المجاني." },
-      { "type": "number", "id": "low_stock", "label": "اظهر (باقي X قطع) لما المخزون يقل عن", "default": 5 },
-      { "type": "text", "id": "offer_code", "label": "كود خصم يتطبق تلقائياً", "info": "اعمل الكود الأول من Discounts. بيتطبق لوحده في الشيك آوت لما السلة توصل للحد الأدنى." },
-      { "type": "number", "id": "offer_min", "label": "الحد الأدنى للكود", "default": 2000 }
+      { "type": "number", "id": "free_shipping_over", "label": "Free shipping over (EGP)", "default": 0, "info": "0 hides the free-shipping bar. Must match your rule in Settings → Shipping." },
+      { "type": "number", "id": "low_stock", "label": "Show \"Only X left\" when stock is at or below", "default": 5, "info": "0 to turn off. Uses your real inventory." },
+      { "type": "text", "id": "whatsapp", "label": "WhatsApp number", "info": "International format, e.g. 201012345678. Leave empty to hide the button." }
     ]
   },
   {
-    "name": "السوشيال",
+    "name": "Brand",
     "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
       { "type": "url", "id": "instagram", "label": "Instagram" },
       { "type": "url", "id": "tiktok", "label": "TikTok" },
       { "type": "url", "id": "facebook", "label": "Facebook" }

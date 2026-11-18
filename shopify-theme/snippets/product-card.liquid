@@ -1,46 +1,48 @@
 {%- liquid
-  assign v = product.selected_or_first_available_variant
-  assign opt = product.options_with_values.first
+  assign color_index = nil
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if oname contains 'color' or oname contains 'colour'
+      assign color_index = forloop.index0
+    endif
+  endfor
 -%}
-<article class="card" data-product data-type="{{ product.type | escape }}">
-  <a class="media" href="{{ product.url }}">
+<article class="card" data-card>
+  <a class="card-media" href="{{ product.url }}">
     {%- if product.featured_media -%}
-      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 50vw, 25vw', widths: '360,540,800', alt: product.title }}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 50vw, 25vw', widths: '400,600,900', alt: product.title, data-card-img: '' }}
+      {%- if product.media[1] -%}{{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', class: 'alt', sizes: '(max-width: 760px) 50vw, 25vw', widths: '400,600,900', alt: '' }}{%- endif -%}
     {%- else -%}
       {{ 'apparel-1' | placeholder_svg_tag: 'ph' }}
     {%- endif -%}
-    {%- if product.available == false -%}
-      <span class="badge">نفد</span>
-    {%- elsif product.compare_at_price > product.price -%}
-      <span class="badge hot">خصم {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
-    {%- elsif product.tags contains 'best-seller' -%}
-      <span class="badge">الأكثر مبيعاً</span>
-    {%- endif -%}
-    {% render 'stock-note', product: product %}
+    {%- if product.available == false -%}<span class="tag tag-abs">Sold out</span>
+    {%- elsif product.compare_at_price > product.price -%}<span class="tag tag-abs">Sale</span>{%- endif -%}
   </a>
-  <div class="info">
+  <div class="card-info">
     <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
-    {% render 'price', product: product %}
-    {%- unless product.has_only_default_variant -%}
-      <div class="sizes" role="radiogroup" aria-label="{{ opt.name | escape }}">
-        {%- for value in opt.values -%}
+    <div class="price">
+      {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
+      {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+    </div>
+    {%- if color_index != nil -%}
+      <div class="card-dots">
+        {%- for value in product.options_with_values[color_index].values -%}
           {%- liquid
-            assign avail = false
+            assign vimg = nil
+            assign vid = nil
             for x in product.variants
-              if x.option1 == value and x.available
-                assign avail = true
+              if x.options[color_index] == value
+                assign vid = x.id
+                if x.featured_image
+                  assign vimg = x.featured_image | image_url: width: 900
+                endif
                 break
               endif
             endfor
           -%}
-          <button type="button" class="size{% if value == v.option1 %} on{% endif %}" data-opt="0" data-value="{{ value | escape }}" {% unless avail %}disabled{% endunless %}>{{ value }}</button>
+          <a href="{{ product.url }}?variant={{ vid }}" class="dot" style="background:{% render 'color-hex', name: value %}" title="{{ value | escape }}" aria-label="{{ value | escape }}"{% if vimg %} data-swap="{{ vimg }}"{% endif %}></a>
         {%- endfor -%}
       </div>
-    {%- endunless -%}
-    <div class="actions">
-      <a class="btn btn-dark{% unless product.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">اطلب الآن</a>
-      <button type="button" class="add" data-add data-id="{{ v.id }}" aria-label="أضف للسلة" {% unless product.available %}disabled{% endunless %}>+</button>
-    </div>
+    {%- endif -%}
   </div>
-  {% render 'variant-data', product: product %}
 </article>

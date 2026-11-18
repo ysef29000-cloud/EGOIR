@@ -1,15 +1,18 @@
 <div class="overlay" data-overlay></div>
-<aside class="drawer" id="cart-drawer" aria-label="السلة" aria-hidden="true">
+<aside class="drawer" id="cart-drawer" aria-label="Bag" aria-hidden="true">
   <div class="drawer-head">
-    <h3>السلة</h3>
-    <button type="button" class="x" data-close aria-label="إغلاق">✕</button>
+    <span>Your bag <span data-cart-count-inline></span></span>
+    <button type="button" class="x" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
   </div>
   <div class="ship-bar" data-ship-bar></div>
   <div class="cart-items" data-cart-items></div>
-  <div class="upsell" data-upsell></div>
+  <div class="set-nudge" data-set-nudge></div>
   <div class="drawer-foot">
-    <div class="row"><span>الإجمالي</span><b data-cart-total>{{ cart.total_price | money }}</b></div>
-    <a href="/checkout" class="btn btn-dark btn-block btn-big" data-checkout>إتمام الطلب — دفع عند الاستلام</a>
-    <p class="secure">🔒 دفع آمن • تبديل مجاني خلال 14 يوم</p>
+    <div class="row"><span>Subtotal</span><b data-cart-total>{{ cart.total_price | money }}</b></div>
+    <p class="fine" data-set-saving hidden></p>
+    <p class="fine">Shipping calculated at checkout. Cash on delivery available.</p>
+    <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" class="btn btn-dark btn-block btn-big" data-checkout>Checkout</a>
   </div>
 </aside>

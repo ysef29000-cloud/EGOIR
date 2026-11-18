@@ -1,19 +1,19 @@
 <section class="faq">
-  <h2>{{ section.settings.title }}</h2>
+  <h2 class="section-title">{{ section.settings.title }}</h2>
   {%- for block in section.blocks -%}
-    <details {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><div class="rte">{{ block.settings.a }}</div></details>
+    <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><div class="rte">{{ block.settings.a }}</div></details>
   {%- endfor -%}
 </section>
 {% schema %}
 {
-  "name": "أسئلة متكررة",
-  "settings": [ { "type": "text", "id": "title", "label": "العنوان", "default": "أسئلة متكررة" } ],
+  "name": "FAQ",
+  "settings": [ { "type": "text", "id": "title", "label": "Heading", "default": "FAQ" } ],
   "blocks": [
-    { "type": "q", "name": "سؤال", "settings": [
-      { "type": "text", "id": "q", "label": "السؤال", "default": "سؤال؟" },
-      { "type": "richtext", "id": "a", "label": "الإجابة", "default": "<p>الإجابة</p>" }
+    { "type": "q", "name": "Question", "settings": [
+      { "type": "text", "id": "q", "label": "Question", "default": "Question" },
+      { "type": "richtext", "id": "a", "label": "Answer", "default": "<p>Answer</p>" }
     ] }
   ],
-  "presets": [ { "name": "أسئلة متكررة" } ]
+  "presets": [ { "name": "FAQ" } ]
 }
 {% endschema %}

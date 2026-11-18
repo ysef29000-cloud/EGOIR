@@ -1,24 +1,26 @@
 <section class="page-wrap">
-  <h1>السلة</h1>
+  <h1 class="section-title">Your bag</h1>
   {%- if cart.item_count > 0 -%}
   <form action="{{ routes.cart_url }}" method="post" class="cart-page">
     {%- for item in cart.items -%}
       <div class="ci">
-        <div class="ci-img">{% if item.image %}{{ item.image | image_url: width: 200 | image_tag: alt: item.product.title }}{% endif %}</div>
-        <div><h4><a href="{{ item.url }}">{{ item.product.title }}</a></h4>{% unless item.product.has_only_default_variant %}<small>{{ item.variant.title }}</small>{% endunless %}
-          <div class="qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="الكمية"></div></div>
-        <div class="end"><b>{{ item.final_line_price | money }}</b><br><a class="rm" href="{{ item.url_to_remove }}">حذف</a></div>
+        <a class="ci-img" href="{{ item.url }}">{% if item.image %}{{ item.image | image_url: width: 240 | image_tag: alt: item.product.title }}{% endif %}</a>
+        <div><a class="ci-title" href="{{ item.url }}">{{ item.product.title }}</a>{% unless item.product.has_only_default_variant %}<small>{{ item.variant.title }}</small>{% endunless %}
+          <input class="qty-input" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity"></div>
+        <div class="end">{{ item.final_line_price | money }}{% if item.original_line_price > item.final_line_price %}<br><s>{{ item.original_line_price | money }}</s>{% endif %}<br><a class="rm" href="{{ item.url_to_remove }}">Remove</a></div>
       </div>
     {%- endfor -%}
-    <div class="row total"><span>الإجمالي</span><b>{{ cart.total_price | money }}</b></div>
+    {%- for d in cart.cart_level_discount_applications -%}<div class="row"><span>{{ d.title }}</span><span>-{{ d.total_allocated_amount | money }}</span></div>{%- endfor -%}
+    <div class="row total"><span>Subtotal</span><b>{{ cart.total_price | money }}</b></div>
+    <p class="fine">Shipping calculated at checkout. Cash on delivery available.</p>
     <div class="cart-actions">
-      <button type="submit" name="update" class="btn btn-outline">تحديث</button>
-      <button type="submit" name="checkout" class="btn btn-dark btn-big">إتمام الطلب</button>
+      <button type="submit" name="update" class="btn btn-outline">Update</button>
+      <button type="submit" name="checkout" class="btn btn-dark btn-big">Checkout</button>
     </div>
   </form>
   {%- else -%}
-    <p class="empty">السلة فاضية</p>
-    <div class="center"><a class="btn btn-dark" href="{{ routes.all_products_collection_url }}">ابدأ التسوق</a></div>
+    <p class="empty">Your bag is empty.</p>
+    <div class="center"><a class="btn btn-dark" href="{{ routes.all_products_collection_url }}">Shop now</a></div>
   {%- endif -%}
 </section>
-{% schema %}{ "name": "السلة" }{% endschema %}
+{% schema %}{ "name": "Cart" }{% endschema %}

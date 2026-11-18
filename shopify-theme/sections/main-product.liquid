@@ -1,61 +1,71 @@
-{%- assign v = product.selected_or_first_available_variant -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign set_a = settings.set_product_1
+  if set_a == blank
+    assign set_a = all_products['egoir-hoodie']
+  endif
+  assign set_b = settings.set_product_2
+  if set_b == blank
+    assign set_b = all_products['egoir-pants']
+  endif
+  assign partner = nil
+  if set_a.id == product.id and set_b.id
+    assign partner = set_b
+  elsif set_b.id == product.id and set_a.id
+    assign partner = set_a
+  endif
+-%}
 <section class="pdp" data-product data-pdp>
-  <div class="gallery">
+  <div class="gallery" data-gallery>
     {%- for media in product.media -%}
-      {%- if media.media_type == 'image' -%}
-        {%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}
-        {{ media | image_url: width: 1400 | image_tag: loading: ld, sizes: '(max-width: 760px) 100vw, 50vw', widths: '600,900,1400', alt: media.alt | default: product.title }}
-      {%- else -%}
-        {{ media | media_tag }}
-      {%- endif -%}
+      <div class="gallery-item" data-media-id="{{ media.id }}">
+        {%- if media.media_type == 'image' -%}
+          {%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}
+          {{ media | image_url: width: 1600 | image_tag: loading: ld, sizes: '(max-width: 760px) 100vw, 60vw', widths: '600,900,1200,1600', alt: media.alt | default: product.title }}
+        {%- else -%}
+          {{ media | media_tag }}
+        {%- endif -%}
+      </div>
     {%- else -%}
-      {{ 'apparel-1' | placeholder_svg_tag: 'ph' }}
+      <div class="gallery-item">{{ 'apparel-1' | placeholder_svg_tag: 'ph' }}</div>
     {%- endfor -%}
   </div>
+  {%- if product.media.size > 1 -%}<div class="gallery-dots" data-gallery-dots aria-hidden="true">{%- for m in product.media -%}<i></i>{%- endfor -%}</div>{%- endif -%}
 
   <div class="pdp-body">
     <h1>{{ product.title }}</h1>
     {% render 'price', product: product, variant: v %}
-    {% render 'stock-note', product: product %}
 
     {%- form 'product', product, class: 'pdp-form', data-product-form: '' -%}
       <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
-      {%- unless product.has_only_default_variant -%}
-        {%- for option in product.options_with_values -%}
-          {%- assign oi = forloop.index0 -%}
-          <fieldset class="opt">
-            <legend>{{ option.name }}: <b data-opt-label="{{ oi }}">{{ option.selected_value }}</b></legend>
-            <div class="sizes">
-              {%- for value in option.values -%}
-                <button type="button" class="size{% if value == option.selected_value %} on{% endif %}" data-opt="{{ oi }}" data-value="{{ value | escape }}">{{ value }}</button>
-              {%- endfor -%}
-            </div>
-          </fieldset>
-        {%- endfor -%}
-      {%- endunless -%}
-
-      {%- if section.settings.size_guide != blank -%}
-        <details class="size-guide"><summary>📏 دليل المقاسات</summary>
-          <ul>{%- assign lines = section.settings.size_guide | newline_to_br | split: '<br />' -%}{%- for l in lines -%}{%- assign t = l | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}</ul>
-        </details>
-      {%- endif -%}
-
-      <a class="btn btn-dark btn-big btn-block{% unless v.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">{{ section.settings.buy_label }}</a>
-      <button type="submit" class="btn btn-outline btn-block" data-add {% unless v.available %}disabled{% endunless %}>أضف للسلة</button>
-      <p class="sold-out" data-soldout {% if v.available %}hidden{% endif %}>المقاس ده خلص — جرّب مقاس تاني</p>
+      {% render 'option-picker', product: product, show_images: true %}
+      {% render 'stock-note', product: product %}
+      <a class="btn btn-dark btn-block btn-big{% unless v.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">Buy it now</a>
+      <button type="submit" class="btn btn-outline btn-block" data-add {% unless v.available %}disabled{% endunless %}>Add to bag</button>
+      <p class="soldout-note" data-soldout{% if v.available %} hidden{% endif %}>Sold out in this option — try another size or colour</p>
+      <ul class="checks">
+        {%- for block in section.blocks -%}{%- if block.type == 'point' -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}
+      </ul>
     {%- endform -%}
 
-    <ul class="pdp-meta">
-      {%- for block in section.blocks -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endfor -%}
-    </ul>
+    {%- if partner -%}{% render 'set-offer', partner: partner %}{%- endif -%}
 
-    {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
+    <div class="accs">
+      {%- if product.description != blank -%}
+        <details class="acc" open><summary>Product details</summary><div class="rte">{{ product.description }}</div></details>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tab' -%}
+          <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.title }}</summary><div class="rte">{{ block.settings.text }}</div></details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
   {% render 'variant-data', product: product %}
 
-  <div class="sticky-buy">
-    <div><b>{{ product.title }}</b>{% render 'price', product: product, variant: v %}</div>
-    <a class="btn btn-dark{% unless v.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">اطلب الآن</a>
+  <div class="sticky-buy" data-sticky>
+    <div><b>{{ product.title }}</b><span data-sticky-variant>{{ v.title }}</span></div>
+    <a class="btn btn-dark{% unless v.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">Buy it now</a>
   </div>
 </section>
 
@@ -72,13 +82,13 @@
 </script>
 {% schema %}
 {
-  "name": "صفحة المنتج",
-  "settings": [
-    { "type": "text", "id": "buy_label", "label": "نص زرار الشراء", "default": "اطلب الآن — ادفع عند الاستلام" },
-    { "type": "textarea", "id": "size_guide", "label": "دليل المقاسات (سطر لكل مقاس)", "default": "S: وزن 55-65 كجم، طول 160-170\nM: وزن 65-75 كجم، طول 170-178\nL: وزن 75-85 كجم، طول 175-185\nXL: وزن 85-95 كجم، طول 180-190" }
-  ],
+  "name": "Product page",
   "blocks": [
-    { "type": "point", "name": "ميزة", "settings": [ { "type": "text", "id": "text", "label": "النص", "default": "🚚 يوصلك خلال 2-4 أيام" } ] }
+    { "type": "point", "name": "Check line", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Cash on delivery available" } ] },
+    { "type": "tab", "name": "Collapsible tab", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Shipping" },
+      { "type": "richtext", "id": "text", "label": "Content", "default": "<p>Text</p>" }
+    ] }
   ]
 }
 {% endschema %}

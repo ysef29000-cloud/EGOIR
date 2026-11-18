@@ -1,0 +1,35 @@
+{%- comment -%} Renders colour swatches + size buttons for `product`. {%- endcomment -%}
+{%- assign cur = product.selected_or_first_available_variant -%}
+{%- unless product.has_only_default_variant -%}
+  {%- for option in product.options_with_values -%}
+    {%- assign oi = forloop.index0 -%}
+    {%- assign oname = option.name | downcase -%}
+    {%- assign is_color = false -%}
+    {%- if oname contains 'color' or oname contains 'colour' or oname contains 'لون' -%}{%- assign is_color = true -%}{%- endif -%}
+    <div class="opt" data-group="{{ oi }}">
+      <div class="opt-label">{{ option.name }}: <span data-opt-label>{{ cur.options[oi] }}</span></div>
+      <div class="opt-values{% if is_color %} swatches{% endif %}">
+        {%- for value in option.values -%}
+          {%- liquid
+            assign img = nil
+            if is_color
+              for x in product.variants
+                if x.options[oi] == value and x.featured_image
+                  assign img = x.featured_image
+                  break
+                endif
+              endfor
+            endif
+          -%}
+          {%- if is_color -%}
+            <button type="button" class="sw{% if value == cur.options[oi] %} on{% endif %}" data-value="{{ value | escape }}" aria-label="{{ value | escape }}" title="{{ value | escape }}">
+              {%- if img and show_images -%}{{ img | image_url: width: 120 | image_tag: alt: value, loading: 'lazy' }}{%- else -%}<i style="background:{% render 'color-hex', name: value %}"></i>{%- endif -%}
+            </button>
+          {%- else -%}
+            <button type="button" class="sz{% if value == cur.options[oi] %} on{% endif %}" data-value="{{ value | escape }}">{{ value }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endfor -%}
+{%- endunless -%}

@@ -1,0 +1,12 @@
+{%- assign pv = product.selected_or_first_available_variant -%}
+<div class="set-item" data-product>
+  <a class="set-img" href="{{ product.url }}">
+    {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title, data-variant-img: '' }}{%- else -%}{{ 'apparel-1' | placeholder_svg_tag: 'ph' }}{%- endif -%}
+  </a>
+  <div class="set-item-body">
+    <div class="set-item-title"><a href="{{ product.url }}">{{ product.title }}</a><span class="set-item-price" data-price><span data-price-now>{{ pv.price | money }}</span><s data-price-old hidden></s><span data-price-save hidden></span></span></div>
+    {% render 'option-picker', product: product, show_images: false %}
+    <p class="soldout-note" data-soldout{% if pv.available %} hidden{% endif %}>Sold out in this option</p>
+  </div>
+  {% render 'variant-data', product: product %}
+</div>

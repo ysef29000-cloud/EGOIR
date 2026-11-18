@@ -1,0 +1,19 @@
+{%- liquid
+  assign n = name | downcase | strip
+  case n
+    when 'white', 'off white', 'off-white', 'cream', 'ابيض', 'أبيض'
+      echo '#f4f3f0'
+    when 'black', 'اسود', 'أسود'
+      echo '#111111'
+    when 'iron', 'iron grey', 'iron gray', 'charcoal', 'grey', 'gray', 'حديدي', 'رمادي'
+      echo '#55585c'
+    when 'beige', 'chamois', 'sand', 'shamwa', 'شاميه', 'شامواه', 'بيج'
+      echo '#cdb994'
+    when 'navy'
+      echo '#1d2a4a'
+    when 'olive'
+      echo '#5b5e3f'
+    else
+      echo '#bdbdbd'
+  endcase
+-%}

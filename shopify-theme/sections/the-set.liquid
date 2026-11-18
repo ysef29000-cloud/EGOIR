@@ -1,0 +1,41 @@
+{%- liquid
+  assign a = section.settings.product_1 | default: settings.set_product_1
+  assign b = section.settings.product_2 | default: settings.set_product_2
+  if a == blank
+    assign a = all_products['egoir-hoodie']
+  endif
+  if b == blank
+    assign b = all_products['egoir-pants']
+  endif
+-%}
+<section class="the-set" id="the-set">
+  <div class="the-set-media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 100vw, 50vw', widths: '600,1000,1600', alt: section.settings.title }}
+    {%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag: 'ph' }}{%- endif -%}
+  </div>
+  <div class="the-set-body">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.title }}</h2>
+    {%- if section.settings.text != blank -%}<p class="muted">{{ section.settings.text }}</p>{%- endif -%}
+    {%- if a != blank and b != blank and a.id and b.id -%}
+      {% render 'set-offer', a: a, b: b, heading: 'Build your set' %}
+    {%- else -%}
+      <p class="muted">Choose the hoodie and the pants in Theme settings → The set.</p>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "The set",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image (model wearing the set)" },
+    { "type": "text", "id": "eyebrow", "label": "Small text", "default": "Hoodie + pants" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The set" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Pick any colour and size of each piece. Get both and save." },
+    { "type": "product", "id": "product_1", "label": "Item 1 (default: theme setting)" },
+    { "type": "product", "id": "product_2", "label": "Item 2 (default: theme setting)" }
+  ],
+  "presets": [ { "name": "The set" } ]
+}
+{% endschema %}

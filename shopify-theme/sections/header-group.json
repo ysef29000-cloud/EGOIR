@@ -2,7 +2,7 @@
   "type": "header",
   "name": "Header group",
   "sections": {
-    "announcement": { "type": "announcement", "settings": { "text": "خصم 15% على أي أوردر فوق 2000 ج.م — الكود", "code": "EGO15", "ends_at": "" } },
+    "announcement": { "type": "announcement", "settings": { "text": "Cash on delivery all over Egypt  •  Buy the hoodie + pants set and save 20%" } },
     "header": { "type": "header", "settings": {} }
   },
   "order": ["announcement", "header"]

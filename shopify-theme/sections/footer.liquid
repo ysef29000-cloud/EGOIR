@@ -1,18 +1,37 @@
 <footer class="footer">
-  <div class="logo">{{ shop.name }}</div>
-  {%- if section.settings.menu.links.size > 0 -%}
-  <div class="footer-links">{%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</div>
-  {%- endif -%}
-  <div class="footer-links">
-    {%- if settings.instagram != blank -%}<a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
-    {%- if settings.tiktok != blank -%}<a href="{{ settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
-    {%- if settings.facebook != blank -%}<a href="{{ settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+  <div class="footer-top">
+    <div class="footer-news">
+      <h3>Join the list</h3>
+      <p>New drops and offers first.</p>
+      {%- form 'customer', class: 'news-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}<p class="ok">Thanks for subscribing.</p>{%- endif -%}
+        <div class="inline-form">
+          <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address" required>
+          <button type="submit" class="btn btn-light">Subscribe</button>
+        </div>
+      {%- endform -%}
+    </div>
+    <div class="footer-links">
+      {%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+    </div>
+    <div class="footer-links">
+      {%- if settings.instagram != blank -%}<a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+      {%- if settings.tiktok != blank -%}<a href="{{ settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+      {%- if settings.facebook != blank -%}<a href="{{ settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+    </div>
   </div>
-  <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}. كل الحقوق محفوظة.</small>
+  <div class="footer-bottom">
+    <div class="logo">{{ shop.name }}</div>
+    <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.note != blank %} · {{ section.settings.note }}{% endif %}</small>
+  </div>
 </footer>
 {% schema %}
 {
-  "name": "الفوتر",
-  "settings": [ { "type": "link_list", "id": "menu", "label": "القائمة", "default": "footer" } ]
+  "name": "Footer",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" },
+    { "type": "text", "id": "note", "label": "Small note", "default": "Cash on delivery all over Egypt" }
+  ]
 }
 {% endschema %}

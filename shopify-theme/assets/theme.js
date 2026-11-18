@@ -1,19 +1,21 @@
 (() => {
   "use strict";
   const EG = window.EG || {};
+  const root = EG.root || "/";
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const root = EG.root || "/";
+  // elements that belong to this product scope (not to a nested one, e.g. the set box inside the product page)
+  const own = (scope, sel) => $$(sel, scope).filter(el => el.closest("[data-product]") === scope);
+  const own1 = (scope, sel) => own(scope, sel)[0];
 
   /* ---------- money ---------- */
   function money(cents) {
-    const fmt = EG.moneyFormat || "{{amount}}";
     const n = cents / 100;
     const group = (x, d, sep, dec) => {
       const [i, f] = x.toFixed(d).split(".");
       return i.replace(/\B(?=(\d{3})+(?!\d))/g, sep) + (f ? dec + f : "");
     };
-    return fmt.replace(/\{\{\s*(\w+)\s*\}\}/, (_, k) => {
+    return (EG.moneyFormat || "{{amount}}").replace(/\{\{\s*(\w+)\s*\}\}/, (_, k) => {
       if (k === "amount_no_decimals") return group(n, 0, ",", ".");
       if (k === "amount_with_comma_separator") return group(n, 2, ".", ",");
       if (k === "amount_no_decimals_with_comma_separator") return group(n, 0, ".", ",");
@@ -21,186 +23,246 @@
       return group(n, 2, ",", ".");
     });
   }
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const sized = (src, w) => {
+    if (!src || src.startsWith("data:")) return src || "";
+    return /[?&]width=\d+/.test(src) ? src.replace(/([?&])width=\d+/, "$1width=" + w) : src + (src.includes("?") ? "&" : "?") + "width=" + w;
+  };
 
-  /* ---------- toast ---------- */
   let tt;
   function toast(msg) {
     const t = $("#toast"); if (!t) return;
     t.textContent = msg; t.classList.add("on");
-    clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2200);
+    clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2400);
   }
 
-  /* ---------- promo: copy code + real countdown ---------- */
-  $$("[data-copy]").forEach(b => b.addEventListener("click", () => {
-    navigator.clipboard?.writeText(b.dataset.copy); toast("تم نسخ الكود ✓");
-  }));
-  $$("[data-ends]").forEach(el => {
-    const end = new Date(el.dataset.ends).getTime();
-    if (!end || isNaN(end)) return;
-    const tick = () => {
-      const ms = end - Date.now();
-      if (ms <= 0) { el.hidden = true; return false; }
-      const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
-      el.textContent = (d ? d + "ي " : "") + [h, m, s].map(v => String(v).padStart(2, "0")).join(":");
-      el.hidden = false; return true;
-    };
-    if (tick()) { const iv = setInterval(() => { if (!tick()) clearInterval(iv); }, 1000); }
+  /* ---------- mobile menu ---------- */
+  const menuBtn = $("[data-menu-toggle]"), nav = $("[data-nav]");
+  menuBtn?.addEventListener("click", () => {
+    const hdr = $("[data-header]");
+    document.documentElement.style.setProperty("--hdr", hdr.getBoundingClientRect().bottom + "px");
+    const on = nav.classList.toggle("on");
+    menuBtn.setAttribute("aria-expanded", on);
+    document.body.classList.toggle("lock", on);
   });
 
-  /* ---------- category filter ---------- */
-  $$("[data-filters]").forEach(bar => bar.addEventListener("click", e => {
-    const b = e.target.closest("[data-cat]"); if (!b) return;
-    $$(".chip", bar).forEach(c => c.classList.toggle("on", c === b));
-    const grid = bar.closest("section").querySelector(".grid");
-    $$("[data-product]", grid).forEach(card => { card.hidden = b.dataset.cat && card.dataset.type !== b.dataset.cat; });
-  }));
+  /* ---------- product scopes (product page, set items) ---------- */
+  function variants(scope) {
+    if (!scope._vs) {
+      const el = own1(scope, "script[data-variants]");
+      try { scope._vs = el ? JSON.parse(el.textContent) : []; } catch { scope._vs = []; }
+    }
+    return scope._vs;
+  }
+  const groups = scope => own(scope, ".opt[data-group]");
+  function selection(scope) {
+    return groups(scope).map(g => { const on = $(".on[data-value]", g); return on ? on.dataset.value : null; });
+  }
+  function current(scope) {
+    const vs = variants(scope), sel = selection(scope);
+    if (!sel.length) return vs[0];
+    return vs.find(v => sel.every((val, i) => v.options[i] === val)) || null;
+  }
+  function markAvailability(scope) {
+    const vs = variants(scope), sel = selection(scope);
+    groups(scope).forEach((g, gi) => {
+      $$("[data-value]", g).forEach(b => {
+        const test = sel.slice(); test[gi] = b.dataset.value;
+        const ok = vs.some(v => v.available && test.every((val, i) => val == null || v.options[i] === val));
+        b.classList.toggle("na", !ok);
+      });
+    });
+  }
 
-  /* ---------- variant selection (cards + product page) ---------- */
-  function variantsOf(scope) {
-    if (!scope._variants) {
-      const el = $("[data-variants]", scope);
-      try { scope._variants = el ? JSON.parse(el.textContent) : []; } catch { scope._variants = []; }
+  function update(scope) {
+    markAvailability(scope);
+    const v = current(scope);
+    scope._v = v;
+    const off = !v || !v.available;
+    groups(scope).forEach(g => { const l = $("[data-opt-label]", g), on = $(".on", g); if (l && on) l.textContent = on.dataset.value; });
+    if (v) {
+      own(scope, "[data-buy]").forEach(a => { a.href = `${root}cart/${v.id}:1`; });
+      own(scope, "[data-add]").forEach(b => { b.dataset.id = v.id; });
+      const hid = own1(scope, "[data-variant-id]"); if (hid) hid.value = v.id;
+      own(scope, "[data-price]").forEach(p => {
+        $("[data-price-now]", p).textContent = money(v.price);
+        const old = $("[data-price-old]", p), save = $("[data-price-save]", p), has = v.compare > v.price;
+        if (old) { old.hidden = !has; if (has) old.textContent = money(v.compare); }
+        if (save) save.hidden = !has;
+      });
+      const st = own1(scope, "[data-stock]");
+      if (st) { const show = EG.lowStock > 0 && v.qty != null && v.qty > 0 && v.qty <= EG.lowStock; st.hidden = !show; if (show) $("[data-stock-qty]", st).textContent = v.qty; }
+      // image for this colour
+      const vimg = own1(scope, "[data-variant-img]");
+      if (vimg && v.img) { vimg.src = sized(v.img, 500); vimg.removeAttribute("srcset"); }
+      const gal = own1(scope, "[data-gallery]");
+      if (gal && v.media && scope._lastMedia !== v.media) {
+        const item = $(`[data-media-id="${v.media}"]`, gal);
+        if (item && scope._lastMedia !== undefined) { gal.prepend(item); gal.scrollTo({ left: 0, behavior: "smooth" }); }
+        scope._lastMedia = v.media;
+      }
+      const sv = own1(scope, "[data-sticky-variant]"); if (sv) sv.textContent = v.options.join(" / ");
+      if (scope.matches("[data-pdp]") && scope._ready) {
+        const url = new URL(location.href); url.searchParams.set("variant", v.id); history.replaceState(null, "", url);
+      }
     }
-    return scope._variants;
+    own(scope, "[data-buy]").forEach(a => a.classList.toggle("is-off", off));
+    own(scope, "[data-add]").forEach(b => { b.disabled = off; });
+    const so = own1(scope, "[data-soldout]"); if (so) so.hidden = !off;
+    scope._ready = true;
+    // refresh any set box this scope belongs to
+    const box = scope.closest("[data-set]") || $("[data-set]", scope);
+    if (box) updateSet(box);
   }
-  function selected(scope) {
-    const sel = [];
-    $$(".sizes", scope).forEach((g, i) => {
-      const on = $(".size.on", g); sel[i] = on ? on.dataset.value : null;
-    });
-    return sel;
-  }
-  function findVariant(scope, sel) {
-    const vs = variantsOf(scope);
-    const match = v => sel.every((val, i) => val == null || v.options[i] === val);
-    return vs.find(v => match(v) && v.available) || vs.find(match);
-  }
-  function applyVariant(scope, v) {
-    if (!v) return;
-    const off = !v.available;
-    $$("[data-buy]", scope).forEach(a => { a.href = `${root}cart/${v.id}:1`; a.classList.toggle("is-off", off); });
-    $$("[data-add]", scope).forEach(b => { b.dataset.id = v.id; b.disabled = off; });
-    const hid = $("[data-variant-id]", scope); if (hid) hid.value = v.id;
-    $$("[data-price]", scope).forEach(p => {
-      $("[data-price-now]", p).textContent = money(v.price);
-      const old = $("[data-price-old]", p), save = $("[data-price-save]", p);
-      const has = v.compare > v.price;
-      if (old) { old.hidden = !has; if (has) old.textContent = money(v.compare); }
-      if (save) { save.hidden = !has; if (has) save.textContent = `وفّر ${Math.round((1 - v.price / v.compare) * 100)}%`; }
-    });
-    const st = $("[data-stock]", scope), low = parseInt(st?.dataset.low || "5", 10);
-    if (st) {
-      const show = v.qty != null && v.qty > 0 && v.qty <= (window.EG.lowStock || low);
-      st.hidden = !show; if (show) $("[data-stock-qty]", st).textContent = v.qty;
-    }
-    const so = $("[data-soldout]", scope); if (so) so.hidden = !off;
-    if (scope.matches("[data-pdp]")) {
-      const url = new URL(location.href); url.searchParams.set("variant", v.id);
-      history.replaceState(null, "", url);
-    }
-  }
+
   document.addEventListener("click", e => {
-    const b = e.target.closest(".size[data-value]"); if (!b || b.disabled) return;
+    const b = e.target.closest(".opt [data-value]"); if (!b) return;
     const scope = b.closest("[data-product]"); if (!scope) return;
-    $$(".size", b.parentElement).forEach(x => x.classList.toggle("on", x === b));
-    const lbl = $(`[data-opt-label="${b.dataset.opt}"]`, scope); if (lbl) lbl.textContent = b.dataset.value;
-    applyVariant(scope, findVariant(scope, selected(scope)));
+    $$("[data-value]", b.parentElement).forEach(x => x.classList.toggle("on", x === b));
+    update(scope);
   });
 
-  /* ---------- cart drawer ---------- */
+  /* ---------- the set (hoodie + pants) ---------- */
+  function setScopes(box) {
+    const items = $$("[data-product]", box);
+    if (items.length < 2) { const host = box.closest("[data-product]"); if (host) items.unshift(host); }
+    return items;
+  }
+  function updateSet(box) {
+    const scopes = setScopes(box);
+    const vs = scopes.map(s => s._v);
+    const ok = vs.length === 2 && vs.every(v => v && v.available);
+    const sum = vs.reduce((t, v) => t + (v ? v.price : 0), 0);
+    const pct = EG.setPct || 0;
+    const now = Math.round(sum * (100 - pct) / 100);
+    const p = $("[data-set-price]", box), o = $("[data-set-old]", box);
+    if (p) p.textContent = money(now);
+    if (o) { o.textContent = pct ? money(sum) : ""; }
+    const buy = $("[data-set-buy]", box), add = $("[data-set-add]", box);
+    if (buy) { buy.classList.toggle("is-off", !ok); if (ok) buy.href = `${root}cart/${vs.map(v => v.id + ":1").join(",")}`; }
+    if (add) add.disabled = !ok;
+  }
+  document.addEventListener("click", async e => {
+    const add = e.target.closest("[data-set-add]"); if (!add) return;
+    const box = add.closest("[data-set]");
+    const vs = setScopes(box).map(s => s._v);
+    if (vs.some(v => !v || !v.available)) return;
+    add.classList.add("loading");
+    try {
+      await api("cart/add.js", { items: vs.map(v => ({ id: v.id, quantity: 1 })) });
+      await renderCart(); openDrawer();
+    } catch (err) { toast(err?.description || "Couldn't add the set"); }
+    add.classList.remove("loading");
+  });
+
+  /* ---------- card colour dots ---------- */
+  document.addEventListener("mouseover", e => {
+    const d = e.target.closest(".dot[data-swap]"); if (!d) return;
+    const img = $("[data-card-img]", d.closest("[data-card]"));
+    if (img && img.dataset.swapped !== d.dataset.swap) { img.src = d.dataset.swap; img.removeAttribute("srcset"); img.dataset.swapped = d.dataset.swap; }
+  });
+
+  /* ---------- gallery dots (mobile) ---------- */
+  $$("[data-gallery]").forEach(g => {
+    const dots = $$("[data-gallery-dots] i", g.parentElement);
+    if (!dots.length) return;
+    const mark = () => { const i = Math.round(g.scrollLeft / g.clientWidth); dots.forEach((d, j) => d.classList.toggle("on", j === Math.abs(i))); };
+    g.addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true }); mark();
+  });
+
+  /* ---------- sticky buy bar ---------- */
+  const sticky = $("[data-sticky]"), mainBuy = $(".pdp-form [data-buy]");
+  if (sticky && mainBuy && "IntersectionObserver" in window) {
+    new IntersectionObserver(([en]) => sticky.classList.toggle("on", !en.isIntersecting && en.boundingClientRect.top < 0)).observe(mainBuy);
+  }
+
+  /* ---------- cart ---------- */
   const drawer = $("#cart-drawer"), overlay = $("[data-overlay]");
-  const openDrawer = () => { drawer.classList.add("on"); drawer.setAttribute("aria-hidden", "false"); overlay.classList.add("on"); document.body.classList.add("lock"); };
-  const closeDrawer = () => { drawer.classList.remove("on"); drawer.setAttribute("aria-hidden", "true"); overlay.classList.remove("on"); document.body.classList.remove("lock"); };
+  function openDrawer() { if (!drawer) return; drawer.classList.add("on"); drawer.setAttribute("aria-hidden", "false"); overlay.classList.add("on"); document.body.classList.add("lock"); }
+  function closeDrawer() { if (!drawer) return; drawer.classList.remove("on"); drawer.setAttribute("aria-hidden", "true"); overlay.classList.remove("on"); document.body.classList.remove("lock"); }
   overlay?.addEventListener("click", closeDrawer);
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
   drawer?.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeDrawer(); });
   $$("[data-open-cart]").forEach(a => a.addEventListener("click", async e => { e.preventDefault(); await renderCart(); openDrawer(); }));
 
-  const api = (path, body) => fetch(root + path, {
-    method: body ? "POST" : "GET",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: body ? JSON.stringify(body) : undefined
-  }).then(async r => { const j = await r.json(); if (!r.ok) throw j; return j; });
+  function api(path, body) {
+    return fetch(root + path, {
+      method: body ? "POST" : "GET",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(async r => { const j = await r.json(); if (!r.ok) throw j; return j; });
+  }
 
-  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const img = (src, w) => src ? `<img src="${src}${src.includes("?") ? "&" : "?"}width=${w}" alt="" loading="lazy">` : "";
+  function setNudge(cart) {
+    const [A, B] = EG.setProducts || [];
+    if (!A || !B || !EG.setPct) return "";
+    const count = id => cart.items.filter(i => i.product_id === id).reduce((t, i) => t + i.quantity, 0);
+    const a = count(A.id), b = count(B.id);
+    if (a === b) return "";
+    const need = a > b ? B : A, have = a > b ? A : B;
+    const from = Math.min(...need.variants.filter(v => v.available).map(v => v.price).concat([Infinity]));
+    if (!isFinite(from)) return "";
+    return `<div class="nudge">
+      <a class="ci-img" href="${esc(need.url)}">${need.image ? `<img src="${esc(need.image)}" alt="" loading="lazy">` : ""}</a>
+      <div><b>Complete the set</b>Add ${esc(need.title)} and get ${EG.setPct}% off both pieces.</div>
+      <a href="${esc(need.url)}">Add</a>
+    </div>`;
+  }
 
   async function renderCart() {
-    if (!drawer) return;
     const cart = await api("cart.js");
-    $$("[data-cart-count]").forEach(c => { c.textContent = cart.item_count; c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); });
-    $("[data-cart-total]", drawer).innerHTML = money(cart.total_price);
+    $$("[data-cart-count]").forEach(c => { c.textContent = cart.item_count; c.hidden = !cart.item_count; c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); });
+    if (!drawer) return cart;
+    $("[data-cart-count-inline]", drawer).textContent = cart.item_count ? `(${cart.item_count})` : "";
+    $("[data-cart-total]", drawer).textContent = money(cart.total_price);
 
     const bar = $("[data-ship-bar]", drawer);
     if (EG.freeShip > 0 && cart.item_count) {
       const left = EG.freeShip - cart.total_price, pct = Math.min(100, cart.total_price / EG.freeShip * 100);
-      bar.innerHTML = (left > 0 ? `فاضلك <b>${money(left)}</b> وتاخد <b>شحن مجاني</b> 🚚` : `🎉 مبروك! الشحن عليك مجاني`) + `<div class="bar"><i style="width:${pct}%"></i></div>`;
+      bar.innerHTML = (left > 0 ? `You're <b>${money(left)}</b> away from free shipping` : `You've got free shipping`) + `<div class="bar"><i style="width:${pct}%"></i></div>`;
     } else bar.innerHTML = "";
 
-    const items = $("[data-cart-items]", drawer);
-    items.innerHTML = cart.items.length ? cart.items.map(it => `
+    $("[data-cart-items]", drawer).innerHTML = cart.items.length ? cart.items.map(it => `
       <div class="ci" data-key="${esc(it.key)}">
-        <div class="ci-img">${img(it.image, 160)}</div>
-        <div><h4>${esc(it.product_title)}</h4>${it.product_has_only_default_variant ? "" : `<small>${esc(it.variant_title)}</small>`}
-          <div class="qty"><button type="button" data-q="-1" aria-label="أقل">−</button><b>${it.quantity}</b><button type="button" data-q="1" aria-label="أكتر">+</button></div></div>
-        <div class="end"><b>${money(it.final_line_price)}</b><br><button type="button" class="rm" data-rm>حذف</button></div>
-      </div>`).join("") : `<div class="empty">السلة فاضية<br><br><button type="button" class="btn btn-dark" data-close>ابدأ التسوق</button></div>`;
+        <a class="ci-img" href="${esc(it.url)}">${it.image ? `<img src="${esc(sized(it.image, 240))}" alt="" loading="lazy">` : ""}</a>
+        <div><a class="ci-title" href="${esc(it.url)}">${esc(it.product_title)}</a>${it.product_has_only_default_variant ? "" : `<small>${esc(it.variant_title)}</small>`}
+          ${(it.line_level_discount_allocations || []).map(d => `<small class="disc">${esc(d.discount_application.title)}</small>`).join("")}
+          <div class="qty"><button type="button" data-q="-1" aria-label="Decrease">−</button><b>${it.quantity}</b><button type="button" data-q="1" aria-label="Increase">+</button></div></div>
+        <div class="end">${money(it.final_line_price)}${it.original_line_price > it.final_line_price ? `<br><s>${money(it.original_line_price)}</s>` : ""}<br><button type="button" class="rm" data-rm>Remove</button></div>
+      </div>`).join("") : `<div class="empty">Your bag is empty.<br><br><button type="button" class="btn btn-dark" data-close>Continue shopping</button></div>`;
 
-    const co = $("[data-checkout]", drawer);
-    co.classList.toggle("is-off", !cart.item_count);
-    co.href = root + "checkout" + (EG.offerCode && cart.total_price >= EG.offerMin ? `?discount=${encodeURIComponent(EG.offerCode)}` : "");
-
-    renderUpsell(cart);
+    $("[data-set-nudge]", drawer).innerHTML = setNudge(cart);
+    const saving = $("[data-set-saving]", drawer);
+    saving.hidden = !(cart.total_discount > 0);
+    if (cart.total_discount > 0) saving.textContent = `You're saving ${money(cart.total_discount)}`;
+    $("[data-checkout]", drawer).classList.toggle("is-off", !cart.item_count);
     return cart;
   }
 
-  async function renderUpsell(cart) {
-    const box = $("[data-upsell]", drawer); box.innerHTML = "";
-    if (!cart.items.length) return;
-    try {
-      const inCart = new Set(cart.items.map(i => i.product_id));
-      const r = await api(`recommendations/products.json?product_id=${cart.items[0].product_id}&limit=6`);
-      const p = (r.products || []).find(x => !inCart.has(x.id) && x.available);
-      if (!p) return;
-      const v = p.variants.find(x => x.available);
-      box.innerHTML = `<div class="upsell-card"><div class="ci-img">${img(p.featured_image, 120)}</div>
-        <div><small>كمّل اللوك 🔥</small><b>${esc(p.title)}</b>${money(p.price)}</div>
-        <button type="button" data-up="${v.id}">أضف</button></div>`;
-    } catch { /* recommendations not available yet */ }
-  }
-
   drawer?.addEventListener("click", async e => {
-    const row = e.target.closest("[data-key]"), q = e.target.closest("[data-q]"), rm = e.target.closest("[data-rm]"), up = e.target.closest("[data-up]");
-    try {
-      if (row && (q || rm)) {
-        const cur = parseInt($(".qty b", row).textContent, 10);
-        row.classList.add("loading");
-        await api("cart/change.js", { id: row.dataset.key, quantity: rm ? 0 : Math.max(0, cur + parseInt(q.dataset.q, 10)) });
-        await renderCart();
-      }
-      if (up) { up.disabled = true; await api("cart/add.js", { items: [{ id: +up.dataset.up, quantity: 1 }] }); await renderCart(); toast("اتضاف للسلة ✓"); }
-    } catch (err) { toast(err?.description || "حصل خطأ، جرّب تاني"); renderCart(); }
+    const row = e.target.closest("[data-key]"), q = e.target.closest("[data-q]"), rm = e.target.closest("[data-rm]");
+    if (!row || !(q || rm)) return;
+    const cur = parseInt($(".qty b", row).textContent, 10);
+    row.classList.add("loading");
+    try { await api("cart/change.js", { id: row.dataset.key, quantity: rm ? 0 : Math.max(0, cur + parseInt(q.dataset.q, 10)) }); }
+    catch (err) { toast(err?.description || "Something went wrong"); }
+    renderCart();
   });
 
-  /* ---------- add to cart (AJAX) ---------- */
+  // single "Add to bag"
   document.addEventListener("click", async e => {
     const b = e.target.closest("[data-add]"); if (!b || b.disabled || !drawer) return;
     e.preventDefault();
     const scope = b.closest("[data-product]");
-    const id = +(b.dataset.id || $("[data-variant-id]", scope)?.value);
+    const id = +(b.dataset.id || own1(scope, "[data-variant-id]")?.value);
     if (!id) return;
     b.classList.add("loading");
-    try {
-      await api("cart/add.js", { items: [{ id, quantity: 1 }] });
-      await renderCart(); openDrawer();
-    } catch (err) { toast(err?.description || "المقاس ده مش متاح"); }
+    try { await api("cart/add.js", { items: [{ id, quantity: 1 }] }); await renderCart(); openDrawer(); }
+    catch (err) { toast(err?.description || "This option is sold out"); }
     b.classList.remove("loading");
   });
 
-  /* ---------- sticky buy bar on mobile product page ---------- */
-  const pdp = $("[data-pdp]"), sticky = $(".sticky-buy");
-  const mainBuy = pdp && $(".pdp-form [data-buy]", pdp);
-  if (sticky && mainBuy && "IntersectionObserver" in window) {
-    new IntersectionObserver(([en]) => sticky.classList.toggle("on", !en.isIntersecting && en.boundingClientRect.top < 0)).observe(mainBuy);
-  }
+  /* ---------- init ---------- */
+  $$("[data-product]").forEach(update);
+  $$("[data-set]").forEach(updateSet);
 })();

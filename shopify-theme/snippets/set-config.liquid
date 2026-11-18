@@ -1,0 +1,30 @@
+{%- comment -%} Global JS config + the two "set" products (hoodie & pants). {%- endcomment -%}
+{%- liquid
+  assign set_a = settings.set_product_1
+  if set_a == blank
+    assign set_a = all_products['egoir-hoodie']
+  endif
+  assign set_b = settings.set_product_2
+  if set_b == blank
+    assign set_b = all_products['egoir-pants']
+  endif
+-%}
+<script>
+  window.EG = {
+    moneyFormat: {{ shop.money_format | json }},
+    root: {{ routes.root_url | append: "/" | replace: "//", "/" | json }},
+    freeShip: {{ settings.free_shipping_over | default: 0 | times: 100 }},
+    lowStock: {{ settings.low_stock | default: 0 }},
+    setPct: {{ settings.set_discount | default: 0 }},
+    setProducts: [
+      {%- for p in (1..2) -%}
+        {%- if forloop.first -%}{%- assign sp = set_a -%}{%- else -%}{%- assign sp = set_b -%}{%- endif -%}
+        {%- if sp != blank and sp.id -%}
+        { "id": {{ sp.id }}, "title": {{ sp.title | json }}, "url": {{ sp.url | json }},
+          "image": {% if sp.featured_image %}{{ sp.featured_image | image_url: width: 300 | json }}{% else %}null{% endif %},
+          "variants": [{%- for v in sp.variants -%}{"id":{{ v.id }},"price":{{ v.price }},"available":{{ v.available }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}] }
+        {%- else -%}null{%- endif -%}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  };
+</script>
