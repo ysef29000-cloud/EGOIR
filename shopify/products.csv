@@ -1,0 +1,30 @@
+﻿Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Variant SKU,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Image Src,Status
+oversized-tee-black,Oversized Tee — Black,<p>Oversized Tee — Black من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,تيشيرتات,"تيشيرتات, الأكثر مبيعاً",TRUE,Size,S,OVERSIZED-TEE-BLACK-S,shopify,1,deny,manual,549,749,TRUE,TRUE,,active
+oversized-tee-black,,,,,,,,Size,M,OVERSIZED-TEE-BLACK-M,shopify,1,deny,manual,549,749,TRUE,TRUE,,
+oversized-tee-black,,,,,,,,Size,L,OVERSIZED-TEE-BLACK-L,shopify,1,deny,manual,549,749,TRUE,TRUE,,
+oversized-tee-black,,,,,,,,Size,XL,OVERSIZED-TEE-BLACK-XL,shopify,1,deny,manual,549,749,TRUE,TRUE,,
+heavy-hoodie-sand,Heavy Hoodie — Sand,<p>Heavy Hoodie — Sand من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,هوديز,"هوديز, جديد",TRUE,Size,M,HEAVY-HOODIE-SAND-M,shopify,3,deny,manual,1199,1499,TRUE,TRUE,,active
+heavy-hoodie-sand,,,,,,,,Size,L,HEAVY-HOODIE-SAND-L,shopify,3,deny,manual,1199,1499,TRUE,TRUE,,
+heavy-hoodie-sand,,,,,,,,Size,XL,HEAVY-HOODIE-SAND-XL,shopify,3,deny,manual,1199,1499,TRUE,TRUE,,
+cargo-pants-olive,Cargo Pants — Olive,<p>Cargo Pants — Olive من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,بناطيل,بناطيل,TRUE,Size,30,CARGO-PANTS-OLIVE-30,shopify,3,deny,manual,999,,TRUE,TRUE,,active
+cargo-pants-olive,,,,,,,,Size,32,CARGO-PANTS-OLIVE-32,shopify,3,deny,manual,999,,TRUE,TRUE,,
+cargo-pants-olive,,,,,,,,Size,34,CARGO-PANTS-OLIVE-34,shopify,3,deny,manual,999,,TRUE,TRUE,,
+cargo-pants-olive,,,,,,,,Size,36,CARGO-PANTS-OLIVE-36,shopify,3,deny,manual,999,,TRUE,TRUE,,
+washed-tee-grey,Washed Tee — Grey,<p>Washed Tee — Grey من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,تيشيرتات,"تيشيرتات, كمية محدودة",TRUE,Size,S,WASHED-TEE-GREY-S,shopify,1,deny,manual,499,649,TRUE,TRUE,,active
+washed-tee-grey,,,,,,,,Size,M,WASHED-TEE-GREY-M,shopify,1,deny,manual,499,649,TRUE,TRUE,,
+washed-tee-grey,,,,,,,,Size,L,WASHED-TEE-GREY-L,shopify,1,deny,manual,499,649,TRUE,TRUE,,
+washed-tee-grey,,,,,,,,Size,XL,WASHED-TEE-GREY-XL,shopify,1,deny,manual,499,649,TRUE,TRUE,,
+varsity-jacket-navy,Varsity Jacket — Navy,<p>Varsity Jacket — Navy من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,جاكيتات,"جاكيتات, خصم 20%",TRUE,Size,M,VARSITY-JACKET-NAVY-M,shopify,2,deny,manual,1899,2399,TRUE,TRUE,,active
+varsity-jacket-navy,,,,,,,,Size,L,VARSITY-JACKET-NAVY-L,shopify,2,deny,manual,1899,2399,TRUE,TRUE,,
+varsity-jacket-navy,,,,,,,,Size,XL,VARSITY-JACKET-NAVY-XL,shopify,2,deny,manual,1899,2399,TRUE,TRUE,,
+zip-hoodie-black,Zip Hoodie — Black,<p>Zip Hoodie — Black من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,هوديز,هوديز,TRUE,Size,S,ZIP-HOODIE-BLACK-S,shopify,3,deny,manual,1299,,TRUE,TRUE,,active
+zip-hoodie-black,,,,,,,,Size,M,ZIP-HOODIE-BLACK-M,shopify,3,deny,manual,1299,,TRUE,TRUE,,
+zip-hoodie-black,,,,,,,,Size,L,ZIP-HOODIE-BLACK-L,shopify,3,deny,manual,1299,,TRUE,TRUE,,
+zip-hoodie-black,,,,,,,,Size,XL,ZIP-HOODIE-BLACK-XL,shopify,3,deny,manual,1299,,TRUE,TRUE,,
+wide-leg-jeans,Wide Leg Jeans,<p>Wide Leg Jeans من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,بناطيل,بناطيل,TRUE,Size,30,WIDE-LEG-JEANS-30,shopify,2,deny,manual,1099,1349,TRUE,TRUE,,active
+wide-leg-jeans,,,,,,,,Size,32,WIDE-LEG-JEANS-32,shopify,2,deny,manual,1099,1349,TRUE,TRUE,,
+wide-leg-jeans,,,,,,,,Size,34,WIDE-LEG-JEANS-34,shopify,2,deny,manual,1099,1349,TRUE,TRUE,,
+logo-tee-off-white,Logo Tee — Off White,<p>Logo Tee — Off White من EGOIR — خامة تقيلة وقصّة مريحة. دفع عند الاستلام وتبديل مجاني خلال 14 يوم.</p>,EGOIR,,تيشيرتات,تيشيرتات,TRUE,Size,S,LOGO-TEE-OFF-WHITE-S,shopify,4,deny,manual,529,,TRUE,TRUE,,active
+logo-tee-off-white,,,,,,,,Size,M,LOGO-TEE-OFF-WHITE-M,shopify,4,deny,manual,529,,TRUE,TRUE,,
+logo-tee-off-white,,,,,,,,Size,L,LOGO-TEE-OFF-WHITE-L,shopify,4,deny,manual,529,,TRUE,TRUE,,
+logo-tee-off-white,,,,,,,,Size,XL,LOGO-TEE-OFF-WHITE-XL,shopify,4,deny,manual,529,,TRUE,TRUE,,
