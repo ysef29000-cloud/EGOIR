@@ -1,23 +1,23 @@
 {
   "sections": {
-    "hero": { "type": "hero", "settings": { "eyebrow": "New collection", "title": "EGOIR", "button_label": "Shop now" } },
+    "hero": { "type": "hero", "settings": { "eyebrow": "EGOIR — Drop 01", "title": "Own it.", "button_label": "Shop the drop" } },
     "features": {
       "type": "features",
       "blocks": {
-        "f1": { "type": "item", "settings": { "title": "Cash on delivery", "text": "All over Egypt" } },
-        "f2": { "type": "item", "settings": { "title": "Shipping 100 EGP", "text": "Delivered to your door" } },
-        "f3": { "type": "item", "settings": { "title": "Save 20%", "text": "On every hoodie + pants set" } }
+        "f1": { "type": "item", "settings": { "title": "Cash on delivery", "text": "Pay when it lands." } },
+        "f2": { "type": "item", "settings": { "title": "100 EGP shipping", "text": "Anywhere in Egypt." } },
+        "f3": { "type": "item", "settings": { "title": "20% off the set", "text": "Hoodie + pants. Done." } }
       },
       "block_order": ["f1", "f2", "f3"]
     },
-    "shop": { "type": "featured-collection", "settings": { "title": "Shop all", "columns": "2" } },
+    "shop": { "type": "featured-collection", "settings": { "title": "The drop", "columns": "2" } },
     "set": { "type": "the-set", "settings": {} },
     "faq": {
       "type": "faq",
       "blocks": {
-        "q1": { "type": "q", "settings": { "q": "How do I pay?", "a": "<p>Cash on delivery, all over Egypt.</p>" } },
+        "q1": { "type": "q", "settings": { "q": "How do I pay?", "a": "<p>Cash, when it arrives. Anywhere in Egypt.</p>" } },
         "q2": { "type": "q", "settings": { "q": "How much is shipping?", "a": "<p>100 EGP to any address in Egypt.</p>" } },
-        "q3": { "type": "q", "settings": { "q": "How does the set discount work?", "a": "<p>Add a hoodie and pants in any colours and sizes and you get 20% off both. Every hoodie + pants pair in your bag counts.</p>" } }
+        "q3": { "type": "q", "settings": { "q": "How does the set discount work?", "a": "<p>Hoodie + pants, any colours, any sizes: 20% off both. Every pair in your bag counts.</p>" } }
       },
       "block_order": ["q1", "q2", "q3"]
     }

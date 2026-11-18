@@ -19,7 +19,7 @@
     <h2>{{ section.settings.title }}</h2>
     {%- if section.settings.text != blank -%}<p class="muted">{{ section.settings.text }}</p>{%- endif -%}
     {%- if a != blank and b != blank and a.id and b.id -%}
-      {% render 'set-offer', a: a, b: b, heading: 'Build your set' %}
+      {% render 'set-offer', a: a, b: b, heading: 'Build the set' %}
     {%- else -%}
       <p class="muted">Choose the hoodie and the pants in Theme settings → The set.</p>
     {%- endif -%}
@@ -31,8 +31,8 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image (model wearing the set)" },
     { "type": "text", "id": "eyebrow", "label": "Small text", "default": "Hoodie + pants" },
-    { "type": "text", "id": "title", "label": "Heading", "default": "The set" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Pick any colour and size of each piece. Get both and save." },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The set." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Two pieces. One statement. Any colour, any size — 20% off both." },
     { "type": "product", "id": "product_1", "label": "Item 1 (default: theme setting)" },
     { "type": "product", "id": "product_2", "label": "Item 2 (default: theme setting)" }
   ],

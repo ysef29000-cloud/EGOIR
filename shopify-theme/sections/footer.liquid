@@ -1,14 +1,14 @@
 <footer class="footer">
   <div class="footer-top">
     <div class="footer-news">
-      <h3>Join the list</h3>
-      <p>New drops and offers first.</p>
+      <h3>Get in first.</h3>
+      <p>Drops and offers before anyone else.</p>
       {%- form 'customer', class: 'news-form' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
         {%- if form.posted_successfully? -%}<p class="ok">Thanks for subscribing.</p>{%- endif -%}
         <div class="inline-form">
           <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address" required>
-          <button type="submit" class="btn btn-light">Subscribe</button>
+          <button type="submit" class="btn btn-light">I'm in</button>
         </div>
       {%- endform -%}
     </div>

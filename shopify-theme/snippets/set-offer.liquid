@@ -5,7 +5,7 @@
 {%- assign pct = settings.set_discount -%}
 <div class="set-box{% if a %} set-standalone{% endif %}" data-set>
   <div class="set-head">
-    <span>{{ heading | default: 'Complete the set' }}</span>
+    <span>{{ heading | default: 'Make it a set' }}</span>
     {%- if pct > 0 -%}<span class="tag tag-inv">Save {{ pct }}%</span>{%- endif -%}
   </div>
   {%- if a -%}
@@ -23,5 +23,5 @@
     <a class="btn btn-dark btn-block" data-set-buy href="{{ routes.cart_url }}">Buy the set</a>
     <button type="button" class="btn btn-outline btn-block" data-set-add>Add set to bag</button>
   </div>
-  {%- if pct > 0 -%}<p class="set-note">{{ pct }}% off both pieces. Mix any colours and sizes. Works for every hoodie + pants pair in your bag.</p>{%- endif -%}
+  {%- if pct > 0 -%}<p class="set-note">Any colour. Any size. {{ pct }}% off both — every pair in your bag.</p>{%- endif -%}
 </div>

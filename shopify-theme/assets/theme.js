@@ -204,7 +204,7 @@
     if (!isFinite(from)) return "";
     return `<div class="nudge">
       <a class="ci-img" href="${esc(need.url)}">${need.image ? `<img src="${esc(need.image)}" alt="" loading="lazy">` : ""}</a>
-      <div><b>Complete the set</b>Add ${esc(need.title)} and get ${EG.setPct}% off both pieces.</div>
+      <div><b>Make it a set</b>Add the ${esc(need.title)}. ${EG.setPct}% off both.</div>
       <a href="${esc(need.url)}">Add</a>
     </div>`;
   }
@@ -229,7 +229,7 @@
           ${(it.line_level_discount_allocations || []).map(d => `<small class="disc">${esc(d.discount_application.title)}</small>`).join("")}
           <div class="qty"><button type="button" data-q="-1" aria-label="Decrease">−</button><b>${it.quantity}</b><button type="button" data-q="1" aria-label="Increase">+</button></div></div>
         <div class="end">${money(it.final_line_price)}${it.original_line_price > it.final_line_price ? `<br><s>${money(it.original_line_price)}</s>` : ""}<br><button type="button" class="rm" data-rm>Remove</button></div>
-      </div>`).join("") : `<div class="empty">Your bag is empty.<br><br><button type="button" class="btn btn-dark" data-close>Continue shopping</button></div>`;
+      </div>`).join("") : `<div class="empty">Your bag is empty. Fix that.<br><br><button type="button" class="btn btn-dark" data-close>Shop the drop</button></div>`;
 
     $("[data-set-nudge]", drawer).innerHTML = setNudge(cart);
     const saving = $("[data-set-saving]", drawer);

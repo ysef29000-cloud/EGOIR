@@ -42,7 +42,7 @@
       {% render 'stock-note', product: product %}
       <a class="btn btn-dark btn-block btn-big{% unless v.available %} is-off{% endunless %}" data-buy href="{{ routes.cart_url }}/{{ v.id }}:1">Buy it now</a>
       <button type="submit" class="btn btn-outline btn-block" data-add {% unless v.available %}disabled{% endunless %}>Add to bag</button>
-      <p class="soldout-note" data-soldout{% if v.available %} hidden{% endif %}>Sold out in this option — try another size or colour</p>
+      <p class="soldout-note" data-soldout{% if v.available %} hidden{% endif %}>Gone in this option. Pick another size or colour.</p>
       <ul class="checks">
         {%- for block in section.blocks -%}{%- if block.type == 'point' -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}
       </ul>
