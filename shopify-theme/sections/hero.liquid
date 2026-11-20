@@ -1,5 +1,7 @@
 <section class="hero hero-{{ section.settings.height }}">
-  {%- if section.settings.image != blank -%}
+  {%- if section.settings.video != blank -%}
+    {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', class: 'hero-img hero-video', image_size: '1600x' }}
+  {%- elsif section.settings.image != blank -%}
     {%- if section.settings.image_mobile != blank -%}
       <picture>
         <source media="(max-width: 760px)" srcset="{{ section.settings.image_mobile | image_url: width: 1000 }}">
@@ -22,7 +24,8 @@
 {
   "name": "Hero image",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "video", "id": "video", "label": "Video (optional)", "info": "Plays muted on loop. Upload in Content → Files. Short clips (5–10s) work best." },
+    { "type": "image_picker", "id": "image", "label": "Image (used when there's no video)" },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (optional)" },
     { "type": "select", "id": "height", "label": "Height", "options": [ { "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" } ], "default": "full" },
     { "type": "text", "id": "title", "label": "Text (optional)", "default": "New drop" },

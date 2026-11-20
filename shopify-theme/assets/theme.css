@@ -321,36 +321,4 @@ svg.ph{width:100%;height:100%;background:var(--soft);fill:#cfcfcf}
 @media (prefers-reduced-motion:reduce){.js [data-reveal]{opacity:1;transform:none}.hero-img,.hero-inner{animation:none}}
 .gallery{transition:opacity .25s var(--ease)}
 
-/* ---- sections from the references ---- */
-/* Nothing Personal: scrolling text line */
-.tmq{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}
-.tmq-track{display:inline-flex;gap:48px;padding-left:48px;animation:mq 30s linear infinite}
-.tmq-track span{font-size:clamp(26px,3vw,40px);color:#4a4a4a}
-/* SN2: big collection tiles with label on the image */
-.tiles{padding:clamp(48px,6vw,88px) var(--pad) 0}
-.tiles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.tile{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--soft);display:block}
-.tile img,.tile svg{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease,ease)}
-.tile:hover img{transform:scale(1.04)}
-.tile-label{position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.1em;text-shadow:0 1px 10px rgba(0,0,0,.3)}
-.tile-btn{background:#fff;color:var(--ink);padding:8px 16px;font-size:11px;text-shadow:none}
-.tile svg.ph{background:#2a2a2a;fill:#3a3a3a}
-/* RLNTLSS: portrait photo cards that swipe, product chip on each */
-.ugc{padding:clamp(48px,6vw,88px) 0 clamp(48px,6vw,88px) var(--pad)}
-.ugc .section-title{text-align:left}
-.ugc-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-right:var(--pad);scrollbar-width:none}
-.ugc-row::-webkit-scrollbar{display:none}
-.ugc-card{position:relative;flex:0 0 clamp(220px,22vw,320px);aspect-ratio:9/14;overflow:hidden;background:#222;scroll-snap-align:start}
-.ugc-card>img,.ugc-card>svg{width:100%;height:100%;object-fit:cover}
-.ugc-card>svg.ph{background:#2a2a2a;fill:#3a3a3a}
-.ugc-chip{position:absolute;left:10px;right:10px;bottom:10px;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.92);padding:8px;font-size:11px}
-.ugc-thumb{width:34px;height:44px;flex:none;background:var(--soft);overflow:hidden}
-.ugc-thumb img{width:100%;height:100%;object-fit:cover}
-.ugc-name{display:block;text-transform:uppercase;letter-spacing:.05em}
-.ugc-price{color:var(--grey)}
-@media (max-width:760px){
-  .tiles-grid{grid-template-columns:1fr 1fr;gap:6px}
-  .tile-label{left:10px;right:10px;bottom:10px;flex-direction:column;align-items:flex-start;gap:8px}
-  .ugc-card{flex-basis:68vw}
-  .tmq-track span{font-size:24px}
-}
+.hero-video{object-fit:cover;object-position:center 35%}

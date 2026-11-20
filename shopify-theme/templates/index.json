@@ -28,16 +28,16 @@
     "story": {
       "type": "image-text",
       "settings": {
-        "title": "Unbothered. Made in Egypt.",
+        "title": "Made to be worn, not explained.",
         "text": "<p>Heavy fabric. Clean lines. Nothing extra.</p>",
-        "button_label": "Shop now",
-        "flip": false
+        "button_label": "Shop the collection",
+        "flip": true
       }
     },
     "insta": {
       "type": "instagram",
       "settings": {
-        "title": "Join the family",
+        "title": "Follow us",
         "button": "Follow us"
       }
     },
@@ -74,89 +74,13 @@
         "q2",
         "q3"
       ]
-    },
-    "tmq": {
-      "type": "text-marquee",
-      "settings": {
-        "text": "Worn with intent"
-      }
-    },
-    "tiles": {
-      "type": "collection-tiles",
-      "settings": {
-        "title": "Shop by category"
-      },
-      "blocks": {
-        "c1": {
-          "type": "tile",
-          "settings": {
-            "label": "Hoodies"
-          }
-        },
-        "c2": {
-          "type": "tile",
-          "settings": {
-            "label": "Pants"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2"
-      ]
-    },
-    "ugc": {
-      "type": "ugc-cards",
-      "settings": {},
-      "blocks": {
-        "u1": {
-          "type": "card",
-          "settings": {
-            "product": "egoir-hoodie"
-          }
-        },
-        "u2": {
-          "type": "card",
-          "settings": {
-            "product": "egoir-pants"
-          }
-        },
-        "u3": {
-          "type": "card",
-          "settings": {
-            "product": "egoir-hoodie"
-          }
-        },
-        "u4": {
-          "type": "card",
-          "settings": {
-            "product": "egoir-pants"
-          }
-        },
-        "u5": {
-          "type": "card",
-          "settings": {
-            "product": "egoir-hoodie"
-          }
-        }
-      },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4",
-        "u5"
-      ]
     }
   },
   "order": [
     "hero",
-    "story",
-    "tmq",
-    "tiles",
     "shop",
-    "ugc",
     "set",
+    "story",
     "insta",
     "faq"
   ]
