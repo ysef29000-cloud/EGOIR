@@ -1,7 +1,7 @@
 {%- assign has = section.blocks.size -%}
 {%- if has > 0 or request.design_mode -%}
 <section class="insta">
-  <h2 class="section-title">{{ section.settings.title }}</h2>
+  <h2 class="section-title"><span class="mono sec-n" data-sec-n></span>{{ section.settings.title }}</h2>
   <div class="insta-grid">
     {%- for block in section.blocks -%}
       <a href="{{ section.settings.link | default: '#' }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>

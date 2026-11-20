@@ -320,3 +320,31 @@ svg.ph{width:100%;height:100%;background:var(--soft);fill:#cfcfcf}
 .drawer.on .ci:nth-child(2){animation-delay:.06s}.drawer.on .ci:nth-child(3){animation-delay:.12s}.drawer.on .ci:nth-child(4){animation-delay:.18s}
 @media (prefers-reduced-motion:reduce){.js [data-reveal]{opacity:1;transform:none}.hero-img,.hero-inner{animation:none}}
 .gallery{transition:opacity .25s var(--ease)}
+
+
+/* ---- street layer ---- */
+.mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.marquee{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+/* film grain */
+.grain{position:absolute;inset:-50%;z-index:1;pointer-events:none;opacity:.13;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+/* hero */
+.hero-word{position:absolute;left:0;right:0;bottom:-.17em;z-index:1;text-align:center;font-weight:200;font-size:27vw;line-height:1;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.55);pointer-events:none;white-space:nowrap}
+.hero-corner{position:absolute;top:18px;left:var(--pad);right:var(--pad);z-index:2;display:flex;justify-content:space-between;color:rgba(255,255,255,.8)}
+.hero-inner{z-index:2;margin-bottom:9vw}
+/* stickers */
+.sticker{position:absolute;z-index:2;top:12px;right:12px;font-family:"Geist Mono",ui-monospace,monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;background:#fff;color:var(--ink);border:1px solid var(--ink);padding:5px 9px;transform:rotate(4deg);box-shadow:2px 2px 0 var(--ink);transition:transform .3s var(--ease,ease)}
+.card:hover .sticker{transform:rotate(-2deg) scale(1.05)}
+.sticker-big{top:auto;bottom:28px;right:28px;font-size:14px;line-height:1.15;padding:12px 14px;transform:rotate(-6deg);text-align:center}
+.the-set-media,.split-media{overflow:hidden}
+/* numbered titles */
+.sec-n{display:block;color:var(--grey);margin-bottom:8px;font-size:11px;letter-spacing:.1em}
+/* small details */
+.card-info h3::before{content:"→ ";opacity:0;margin-left:-14px;transition:opacity .3s,margin .3s}
+.card:hover .card-info h3::before{opacity:1;margin-left:0}
+.footer-bottom small:first-child::after{content:"  ✦  Made in Egypt"}
+::selection{background:var(--ink);color:#fff}
+@media (max-width:760px){.hero-word{font-size:34vw}.hero-corner{flex-direction:column;gap:4px}.sticker-big{bottom:16px;right:16px;font-size:12px}}
+@media (prefers-reduced-motion:reduce){.grain{animation:none}}

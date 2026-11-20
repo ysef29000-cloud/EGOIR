@@ -10,6 +10,8 @@
 -%}
 <section class="the-set" id="the-set">
   <div class="the-set-media">
+    <div class="grain" aria-hidden="true"></div>
+    {%- if settings.set_discount > 0 -%}<span class="sticker sticker-big">−{{ settings.set_discount }}%<br>the set</span>{%- endif -%}
     {%- if section.settings.image != blank -%}
       {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 100vw, 50vw', widths: '600,1000,1600', alt: section.settings.title }}
     {%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag: 'ph' }}{%- endif -%}

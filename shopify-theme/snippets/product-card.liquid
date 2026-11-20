@@ -15,8 +15,10 @@
     {%- else -%}
       {{ 'apparel-1' | placeholder_svg_tag: 'ph' }}
     {%- endif -%}
-    {%- if product.available == false -%}<span class="tag tag-abs">Sold out</span>
-    {%- elsif product.compare_at_price > product.price -%}<span class="tag tag-abs">Sale</span>{%- endif -%}
+    {%- if product.available == false -%}<span class="sticker">Sold out</span>
+    {%- elsif product.compare_at_price > product.price -%}<span class="sticker">Sale</span>
+    {%- elsif product.tags contains 'set' and settings.set_discount > 0 -%}<span class="sticker">−{{ settings.set_discount }}% the set</span>
+    {%- elsif product.tags contains 'new' -%}<span class="sticker">New drop</span>{%- endif -%}
   </a>
   <div class="card-info">
     <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>

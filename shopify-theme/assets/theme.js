@@ -295,6 +295,9 @@
     });
   }
 
+  /* ---------- numbered section titles: (01) (02) ... ---------- */
+  $$("[data-sec-n]").forEach((el, i) => { el.textContent = `(${String(i + 1).padStart(2, "0")})`; });
+
   /* ---------- init ---------- */
   $$("[data-product]").forEach(update);
   $$("[data-set]").forEach(updateSet);
