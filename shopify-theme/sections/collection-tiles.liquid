@@ -1,0 +1,26 @@
+<section class="tiles">
+  {%- if section.settings.title != blank -%}<h2 class="section-title">{{ section.settings.title }}</h2>{%- endif -%}
+  <div class="tiles-grid">
+    {%- for block in section.blocks -%}
+      {%- assign c = block.settings.collection -%}
+      <a class="tile" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(max-width: 760px) 100vw, 50vw', widths: '600,900,1200', alt: block.settings.label }}
+        {%- elsif c != blank and c.featured_image -%}{{ c.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.label }}
+        {%- else -%}{{ 'collection-1' | placeholder_svg_tag: 'ph' }}{%- endif -%}
+        <span class="tile-label"><span>{{ block.settings.label }}</span><span class="tile-btn">Shop</span></span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Collection tiles",
+  "settings": [ { "type": "text", "id": "title", "label": "Heading", "default": "Shop by category" } ],
+  "max_blocks": 4,
+  "blocks": [ { "type": "tile", "name": "Tile", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Hoodies" },
+    { "type": "collection", "id": "collection", "label": "Collection" } ] } ],
+  "presets": [ { "name": "Collection tiles", "blocks": [ { "type": "tile" }, { "type": "tile" } ] } ]
+}
+{% endschema %}
