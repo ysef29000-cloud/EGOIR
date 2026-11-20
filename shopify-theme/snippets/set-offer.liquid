@@ -1,12 +1,11 @@
 {%- comment -%}
   Bundle box. Pass `partner` (the other set product) to use it inside the product page,
-  or `a` + `b` to build a standalone set (home page).
+  or `a` + `b` to build a standalone set (home page). Offer: free shipping on the pair.
 {%- endcomment -%}
-{%- assign pct = settings.set_discount -%}
 <div class="set-box{% if a %} set-standalone{% endif %}" data-set>
   <div class="set-head">
     <span>{{ heading | default: 'Make it a set' }}</span>
-    {%- if pct > 0 -%}<span class="tag tag-inv">Save {{ pct }}%</span>{%- endif -%}
+    {%- if settings.set_free_shipping -%}<span class="tag tag-inv">Free shipping</span>{%- endif -%}
   </div>
   {%- if a -%}
     {% render 'set-item', product: a %}
@@ -19,9 +18,10 @@
     <span>Set price</span>
     <span><s data-set-old></s> <b data-set-price></b></span>
   </div>
+  {%- if settings.set_free_shipping -%}<p class="set-ship">+ Free shipping</p>{%- endif -%}
   <div class="set-actions">
     <a class="btn btn-dark btn-block" data-set-buy href="{{ routes.cart_url }}">Buy the set</a>
     <button type="button" class="btn btn-outline btn-block" data-set-add>Add set to bag</button>
   </div>
-  {%- if pct > 0 -%}<p class="set-note">Any colour. Any size. {{ pct }}% off both — every pair in your bag.</p>{%- endif -%}
+  {%- if settings.set_free_shipping -%}<p class="set-note">Any colour. Any size. Get the hoodie and the pants together and shipping is on us.</p>{%- endif -%}
 </div>

@@ -15,7 +15,8 @@
     root: {{ routes.root_url | append: "/" | replace: "//", "/" | json }},
     freeShip: {{ settings.free_shipping_over | default: 0 | times: 100 }},
     lowStock: {{ settings.low_stock | default: 0 }},
-    setPct: {{ settings.set_discount | default: 0 }},
+    setPct: 0,
+    setFree: {{ settings.set_free_shipping | json }},
     setProducts: [
       {%- for p in (1..2) -%}
         {%- if forloop.first -%}{%- assign sp = set_a -%}{%- else -%}{%- assign sp = set_b -%}{%- endif -%}

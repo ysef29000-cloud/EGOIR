@@ -22,7 +22,7 @@
       "settings": {
         "title": "The set",
         "eyebrow": "Hoodie + pants",
-        "text": "Any colour, any size. 20% off both."
+        "text": "Any colour, any size. Get both and shipping is free."
       }
     },
     "story": {
@@ -58,14 +58,14 @@
           "type": "q",
           "settings": {
             "q": "How much is shipping?",
-            "a": "<p>100 EGP to any address in Egypt.</p>"
+            "a": "<p>100 EGP anywhere in Egypt — free when you get the hoodie and the pants together.</p>"
           }
         },
         "q3": {
           "type": "q",
           "settings": {
-            "q": "How does the set discount work?",
-            "a": "<p>Hoodie + pants in any colours and sizes: 20% off both. Every pair in your bag counts.</p>"
+            "q": "How does the set offer work?",
+            "a": "<p>Get the hoodie and the pants together, in any colours and sizes, and shipping is free.</p>"
           }
         }
       },

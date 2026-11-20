@@ -12,29 +12,52 @@
         "p2": {
           "type": "point",
           "settings": {
-            "text": "100 EGP shipping, anywhere in Egypt"
+            "text": "Free shipping when you get the hoodie and pants together"
+          }
+        },
+        "t0": {
+          "type": "details",
+          "settings": {
+            "title": "Product details"
           }
         },
         "t1": {
           "type": "tab",
           "settings": {
-            "title": "Shipping & delivery",
-            "text": "<p>We ship all over Egypt for 100 EGP. Pay cash when your order arrives.</p>"
+            "title": "Size chart",
+            "text": "<p>S — chest 58 cm, length 68 cm<br>M — chest 61 cm, length 70 cm<br>L — chest 64 cm, length 72 cm<br>XL — chest 67 cm, length 74 cm</p><p>Edit this with your real measurements.</p>"
           }
         },
         "t2": {
           "type": "tab",
           "settings": {
-            "title": "Size guide",
-            "text": "<p>S · M · L · XL — edit this tab with your measurements.</p>"
+            "title": "Size reference",
+            "text": "<p>Model is 175 cm and wears size M.</p><p>Edit this with your model's real height and size.</p>"
+          }
+        },
+        "t3": {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping",
+            "text": "<p>Delivery all over Egypt. Shipping is 100 EGP, free when you get the hoodie and the pants together. Pay cash on delivery.</p>"
+          }
+        },
+        "t4": {
+          "type": "tab",
+          "settings": {
+            "title": "Care guide",
+            "text": "<p>Wash cold, inside out. Do not tumble dry. Iron on low heat.</p>"
           }
         }
       },
       "block_order": [
         "p1",
         "p2",
+        "t0",
         "t1",
-        "t2"
+        "t2",
+        "t3",
+        "t4"
       ],
       "settings": {}
     },

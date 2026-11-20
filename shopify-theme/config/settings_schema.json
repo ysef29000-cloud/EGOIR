@@ -12,7 +12,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Customers who buy one item are offered the other at a set discount. The discount itself must also be created in Discounts (see the README). Leave empty to use the products with handles egoir-hoodie and egoir-pants."
+        "content": "Customers who buy the hoodie and the pants together get free shipping. The free-shipping rule itself must also be created in Discounts (see the README)."
       },
       {
         "type": "product",
@@ -25,14 +25,10 @@
         "label": "Set item 2 (pants)"
       },
       {
-        "type": "range",
-        "id": "set_discount",
-        "label": "Set discount",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "%",
-        "default": 20
+        "type": "checkbox",
+        "id": "set_free_shipping",
+        "label": "Set offer: free shipping",
+        "default": true
       }
     ]
   },

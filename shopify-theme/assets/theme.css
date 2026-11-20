@@ -322,3 +322,15 @@ svg.ph{width:100%;height:100%;background:var(--soft);fill:#cfcfcf}
 .gallery{transition:opacity .25s var(--ease)}
 
 .hero-video{object-fit:cover;object-position:center 35%}
+
+/* ---- product page tabs (big titles, + turns into ×, no lines) ---- */
+.pdp .accs{border-top:0;margin-top:8px}
+.pdp .acc{border-bottom:0}
+.pdp .acc summary{font-size:15px;font-weight:500;letter-spacing:.06em;padding:18px 0;align-items:center}
+.pdp .acc summary::after{content:none}
+.pdp .acc summary i{position:relative;width:18px;height:18px;flex:none;transition:transform .35s var(--ease,ease)}
+.pdp .acc summary i::before,.pdp .acc summary i::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:1.5px;background:currentColor;transform:translate(-50%,-50%)}
+.pdp .acc summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+.pdp .acc[open] summary i{transform:rotate(45deg)}
+.pdp .acc .rte{padding:0 0 18px;color:#555;font-size:14px;line-height:1.7}
+.set-ship{font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-top:-8px;text-align:right}

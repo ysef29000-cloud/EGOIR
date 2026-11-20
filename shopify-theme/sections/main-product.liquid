@@ -51,12 +51,11 @@
     {%- if partner -%}{% render 'set-offer', partner: partner %}{%- endif -%}
 
     <div class="accs">
-      {%- if product.description != blank -%}
-        <details class="acc" open><summary>Product details</summary><div class="rte">{{ product.description }}</div></details>
-      {%- endif -%}
       {%- for block in section.blocks -%}
-        {%- if block.type == 'tab' -%}
-          <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.title }}</summary><div class="rte">{{ block.settings.text }}</div></details>
+        {%- if block.type == 'details' and product.description != blank -%}
+          <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.title }}<i aria-hidden="true"></i></summary><div class="rte">{{ product.description }}</div></details>
+        {%- elsif block.type == 'tab' -%}
+          <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.title }}<i aria-hidden="true"></i></summary><div class="rte">{{ block.settings.text }}</div></details>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -85,6 +84,7 @@
   "name": "Product page",
   "blocks": [
     { "type": "point", "name": "Check line", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Cash on delivery available" } ] },
+    { "type": "details", "name": "Product description tab", "limit": 1, "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Product details" } ] },
     { "type": "tab", "name": "Collapsible tab", "settings": [
       { "type": "text", "id": "title", "label": "Title", "default": "Shipping" },
       { "type": "richtext", "id": "text", "label": "Content", "default": "<p>Text</p>" }

@@ -207,7 +207,7 @@
 
   function setNudge(cart) {
     const [A, B] = EG.setProducts || [];
-    if (!A || !B || !EG.setPct) return "";
+    if (!A || !B || !EG.setFree) return "";
     const count = id => cart.items.filter(i => i.product_id === id).reduce((t, i) => t + i.quantity, 0);
     const a = count(A.id), b = count(B.id);
     if (a === b) return "";
@@ -216,7 +216,7 @@
     if (!isFinite(from)) return "";
     return `<div class="nudge">
       <a class="ci-img" href="${esc(need.url)}">${need.image ? `<img src="${esc(need.image)}" alt="" loading="lazy">` : ""}</a>
-      <div><b>Make it a set</b>Add the ${esc(need.title)}. ${EG.setPct}% off both.</div>
+      <div><b>Make it a set</b>Add the ${esc(need.title)} and get free shipping.</div>
       <a href="${esc(need.url)}">Add</a>
     </div>`;
   }

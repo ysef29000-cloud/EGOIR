@@ -11,20 +11,17 @@ Products ← Import ← اختار `shopify/products.csv`.
 - ارفع الصور، وبعدين من كل variant اختار صورة اللون بتاعه. ده اللي بيخلّي الصورة تتغير لما العميل يختار اللون.
 - **متغيرش الـ handle** (`egoir-hoodie` و `egoir-pants`). لو غيّرته، اختار المنتجين من Customize ← Theme settings ← The set.
 
-## 3. خصم الطقم 20% (لازم يتعمل عشان الخصم يتطبق فعلاً)
-الثيم بيعرض الخصم بس، لكن اللي بيطبّقه هو شوبيفاي. عشان كده لازم تعمله:
+## 3. شحن مجاني لما العميل ياخد الهودي والبنطلون مع بعض
+الثيم بيعرض العرض بس، واللي بيطبّق الشحن المجاني فعلاً هو شوبيفاي. عشان كده لازم تعمل الخصم ده:
 
-Discounts ← Create discount ← **Buy X get Y**
-- Method: **Automatic**، الاسم: `THE SET`
-- Customer buys: Minimum quantity of items = **1** ← Specific products ← **EGOIR Pants**
-- Customer gets: Quantity = **1** ← Specific products ← **EGOIR Hoodie**
-- At a discounted value: **Amount off each** = **440**
-- Maximum number of uses per order: **سيبها فاضية**، عشان كل هودي + بنطلون في نفس الأوردر ياخدوا الخصم.
+Discounts ← Create discount ← **Free shipping**
+- Method: **Automatic**، الاسم: `FREE SHIPPING — THE SET`
+- Countries: **Egypt**
+- Minimum purchase requirements: **Minimum purchase amount = 2200**، وده سعر الهودي (1200) + البنطلون (1000).
 
-**الـ 440 دي محسوبة كده:** 20% من (1200 + 1000) = 440.
-**لو غيّرت الأسعار لازم تغيّر الرقم ده:** الرقم الجديد = (سعر الهودي + سعر البنطلون) × 0.2.
+**ملحوظة مهمة:** شوبيفاي ما بيسمحش إن الشحن المجاني يتشرط بمنتجات معينة، بيتشرط بمبلغ أو بعدد قطع بس. عشان كده أي أوردر يوصل 2200، زي هوديين مثلاً، هياخد شحن مجاني هو كمان. لو عاوز الشحن المجاني يبقى للهودي + البنطلون بس، محتاج تطبيق خصومات من الـ App Store.
 
-الخصم بيظهر في السلة على سطر الهودي، لكنه في الحقيقة 20% من سعر القطعتين مع بعض.
+**لو غيّرت الأسعار** غيّر المبلغ ده كمان، وخليه = سعر الهودي + سعر البنطلون.
 
 ## 4. الدفع والشحن
 - **كاش عند الاستلام:** Settings ← Payments ← Manual payment methods ← **Cash on Delivery (COD)**
