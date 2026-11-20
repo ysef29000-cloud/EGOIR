@@ -12,9 +12,6 @@
     {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-img ph' }}
   {%- endif -%}
   {%- if section.settings.title != blank or section.settings.button_label != blank -%}
-  <div class="grain" aria-hidden="true"></div>
-  {%- if section.settings.word != blank -%}<div class="hero-word" aria-hidden="true">{{ section.settings.word }}</div>{%- endif -%}
-  <div class="hero-corner mono"><span>{{ section.settings.corner_left }}</span><span>{{ section.settings.corner_right }}</span></div>
   <div class="hero-inner">
     {%- if section.settings.title != blank -%}<p class="hero-title">{{ section.settings.title }}</p>{%- endif -%}
     {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#shop' }}" class="btn btn-light">{{ section.settings.button_label }}</a>{%- endif -%}
@@ -28,9 +25,6 @@
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (optional)" },
     { "type": "select", "id": "height", "label": "Height", "options": [ { "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" } ], "default": "full" },
-    { "type": "text", "id": "word", "label": "Big thin word", "default": "EGOIR" },
-    { "type": "text", "id": "corner_left", "label": "Corner text (left)", "default": "Drop 01 — Cairo" },
-    { "type": "text", "id": "corner_right", "label": "Corner text (right)", "default": "Cash on delivery ✦ All Egypt" },
     { "type": "text", "id": "title", "label": "Text (optional)", "default": "New drop" },
     { "type": "text", "id": "button_label", "label": "Button", "default": "Shop now" },
     { "type": "url", "id": "button_link", "label": "Button link" }

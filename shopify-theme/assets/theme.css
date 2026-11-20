@@ -321,30 +321,60 @@ svg.ph{width:100%;height:100%;background:var(--soft);fill:#cfcfcf}
 @media (prefers-reduced-motion:reduce){.js [data-reveal]{opacity:1;transform:none}.hero-img,.hero-inner{animation:none}}
 .gallery{transition:opacity .25s var(--ease)}
 
+/* =========================================================
+   Creative layout — same elements, arranged asymmetrically
+   ========================================================= */
+@media (min-width:991px){
+  /* hero: inset image pushed right, text sits in the white space on the left */
+  .hero{background:#fff;color:var(--ink);height:auto;min-height:0;display:grid;grid-template-columns:1fr 2.1fr;align-items:end;padding:28px var(--pad) 0}
+  .hero-full,.hero-large,.hero-medium{height:auto}
+  .hero>.hero-img,.hero>picture{position:relative;inset:auto;grid-column:2;grid-row:1;height:calc(100svh - 150px);min-height:520px;width:100%}
+  .hero>picture img{height:100%}
+  .hero-inner{grid-column:1;grid-row:1;align-items:flex-start;text-align:left;padding:0 40px 40px 0;align-self:end}
+  .hero-title{text-shadow:none;color:var(--grey)}
+  .hero .btn-light{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .hero .btn-light:hover{background:#2b2b2b}
 
-/* ---- street layer ---- */
-.mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
-.marquee{font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-/* film grain */
-.grain{position:absolute;inset:-50%;z-index:1;pointer-events:none;opacity:.13;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation:grain 1s steps(6) infinite}
-@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
-/* hero */
-.hero-word{position:absolute;left:0;right:0;bottom:-.17em;z-index:1;text-align:center;font-weight:200;font-size:27vw;line-height:1;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.55);pointer-events:none;white-space:nowrap}
-.hero-corner{position:absolute;top:18px;left:var(--pad);right:var(--pad);z-index:2;display:flex;justify-content:space-between;color:rgba(255,255,255,.8)}
-.hero-inner{z-index:2;margin-bottom:9vw}
-/* stickers */
-.sticker{position:absolute;z-index:2;top:12px;right:12px;font-family:"Geist Mono",ui-monospace,monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;background:#fff;color:var(--ink);border:1px solid var(--ink);padding:5px 9px;transform:rotate(4deg);box-shadow:2px 2px 0 var(--ink);transition:transform .3s var(--ease,ease)}
-.card:hover .sticker{transform:rotate(-2deg) scale(1.05)}
-.sticker-big{top:auto;bottom:28px;right:28px;font-size:14px;line-height:1.15;padding:12px 14px;transform:rotate(-6deg);text-align:center}
-.the-set-media,.split-media{overflow:hidden}
-/* numbered titles */
-.sec-n{display:block;color:var(--grey);margin-bottom:8px;font-size:11px;letter-spacing:.1em}
-/* small details */
-.card-info h3::before{content:"→ ";opacity:0;margin-left:-14px;transition:opacity .3s,margin .3s}
-.card:hover .card-info h3::before{opacity:1;margin-left:0}
-.footer-bottom small:first-child::after{content:"  ✦  Made in Egypt"}
-::selection{background:var(--ink);color:#fff}
-@media (max-width:760px){.hero-word{font-size:34vw}.hero-corner{flex-direction:column;gap:4px}.sticker-big{bottom:16px;right:16px;font-size:12px}}
-@media (prefers-reduced-motion:reduce){.grain{animation:none}}
+  /* new in: staggered — first piece big, second smaller and lower */
+  .shop .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;max-width:none;align-items:start}
+  .shop .grid>*{width:auto}
+  .shop .grid>.card:nth-child(4n+1){grid-column:2/span 5}
+  .shop .grid>.card:nth-child(4n+2){grid-column:8/span 4;margin-top:180px}
+  .shop .grid>.card:nth-child(4n+3){grid-column:1/span 4;margin-top:-60px}
+  .shop .grid>.card:nth-child(4n+4){grid-column:6/span 6;margin-top:80px}
+  .shop .section-title{text-align:left;margin-left:calc(100%/12)}
+
+  /* the set: the box overlaps the photo edge */
+  .the-set{grid-template-columns:7fr 5fr;border:0;padding:60px var(--pad);align-items:center}
+  .the-set-media{min-height:640px}
+  .the-set-body{margin-left:-120px;position:relative;z-index:2;background:#fff;padding:40px;max-width:560px}
+
+  /* image + text: image floats, text crosses over it */
+  .split{grid-template-columns:repeat(12,1fr);background:#fff;min-height:0;padding:40px var(--pad) 80px;align-items:end}
+  .split-media{grid-column:6/span 7;grid-row:1;aspect-ratio:4/5;order:0!important}
+  .split.flip .split-media{grid-column:1/span 7}
+  .split-body{grid-column:1/span 6;grid-row:1;position:relative;z-index:2;padding:0 0 60px;max-width:none}
+  .split.flip .split-body{grid-column:7/span 6;padding-left:40px}
+  .split-body h2{font-size:clamp(40px,4.6vw,72px);line-height:1;mix-blend-mode:difference;color:#fff}
+  .split.flip .split-body h2{margin-left:-180px}
+
+  /* instagram: uneven heights */
+  .insta-grid{align-items:start}
+  .insta-grid>*:nth-child(odd){aspect-ratio:3/4}
+  .insta-grid>*:nth-child(3n){margin-top:60px}
+
+  /* faq: title left, questions right */
+  .faq{max-width:none;display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start}
+  .faq .section-title{text-align:left;position:sticky;top:100px}
+}
+@media (min-width:991px){
+  .the-set{display:grid;grid-template-columns:repeat(12,1fr)}
+  .the-set-media{grid-column:1/span 8;grid-row:1}
+  .the-set-body{grid-column:7/span 6;grid-row:1;margin-left:0;box-shadow:0 0 0 1px var(--line)}
+  .split-media{grid-column:1/span 8!important;grid-row:1}
+  .split-body,.split.flip .split-body{grid-column:7/span 5;grid-row:1;align-self:end;background:#fff;padding:40px;margin-bottom:-40px;box-shadow:0 0 0 1px var(--line)}
+  .split-body h2,.split.flip .split-body h2{mix-blend-mode:normal;color:var(--ink);margin-left:0;font-size:clamp(32px,3.4vw,52px)}
+  .faq{column-gap:40px;row-gap:0}
+  .faq .section-title{grid-column:1;grid-row:1/span 20}
+  .faq .acc{grid-column:2}
+}

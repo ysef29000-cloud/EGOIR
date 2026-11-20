@@ -5,7 +5,7 @@
   endif
 -%}
 <section class="shop" id="shop">
-  {%- if section.settings.title != blank -%}<h2 class="section-title"><span class="mono sec-n" data-sec-n></span>{{ section.settings.title }}</h2>{%- endif -%}
+  {%- if section.settings.title != blank -%}<h2 class="section-title">{{ section.settings.title }}</h2>{%- endif -%}
   <div class="grid cols-{{ section.settings.columns }}">
     {%- for product in col.products limit: section.settings.limit -%}
       {% render 'product-card', product: product %}

@@ -1,5 +1,5 @@
 <section class="faq">
-  <h2 class="section-title"><span class="mono sec-n" data-sec-n></span>{{ section.settings.title }}</h2>
+  <h2 class="section-title">{{ section.settings.title }}</h2>
   {%- for block in section.blocks -%}
     <details class="acc" {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><div class="rte">{{ block.settings.a }}</div></details>
   {%- endfor -%}

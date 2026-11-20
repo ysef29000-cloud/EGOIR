@@ -2,7 +2,7 @@
   "type": "header",
   "name": "Header group",
   "sections": {
-    "announcement": { "type": "announcement", "settings": { "text": "Cash on delivery all over Egypt  ✦  Hoodie + pants: 20% off the set  ✦  Drop 01 out now" } },
+    "announcement": { "type": "announcement", "settings": { "text": "Cash on delivery all over Egypt  •  Hoodie + pants: 20% off the set" } },
     "header": { "type": "header", "settings": {} }
   },
   "order": ["announcement", "header"]
