@@ -94,11 +94,23 @@
       if (st) { const show = EG.lowStock > 0 && v.qty != null && v.qty > 0 && v.qty <= EG.lowStock; st.hidden = !show; if (show) $("[data-stock-qty]", st).textContent = v.qty; }
       // image for this colour
       const vimg = own1(scope, "[data-variant-img]");
-      if (vimg && v.img) { vimg.src = sized(v.img, +vimg.dataset.w || 500); vimg.removeAttribute("srcset"); }
+      if (vimg && v.img) {
+        const next = sized(v.img, 500);
+        if (vimg.getAttribute("src") !== next) {
+          vimg.classList.add("is-swapping");
+          setTimeout(() => {
+            vimg.onload = () => vimg.classList.remove("is-swapping");
+            vimg.src = next; vimg.removeAttribute("srcset");
+          }, 200);
+        }
+      }
       const gal = own1(scope, "[data-gallery]");
       if (gal && v.media && scope._lastMedia !== v.media) {
         const item = $(`[data-media-id="${v.media}"]`, gal);
-        if (item && scope._lastMedia !== undefined) { gal.prepend(item); gal.scrollTo({ left: 0, behavior: "smooth" }); }
+        if (item && scope._lastMedia !== undefined) {
+          gal.classList.add("is-swapping");
+          setTimeout(() => { gal.prepend(item); gal.scrollTo({ left: 0 }); gal.classList.remove("is-swapping"); }, 250);
+        }
         scope._lastMedia = v.media;
       }
       const sv = own1(scope, "[data-sticky-variant]"); if (sv) sv.textContent = v.options.join(" / ");
@@ -161,20 +173,6 @@
     const img = $("[data-card-img]", d.closest("[data-card]"));
     if (img && img.dataset.swapped !== d.dataset.swap) { img.src = d.dataset.swap; img.removeAttribute("srcset"); img.dataset.swapped = d.dataset.swap; }
   });
-
-  /* ---------- product index: image follows the cursor ---------- */
-  const fl = $("[data-ix-float]");
-  if (fl && matchMedia("(hover: hover)").matches) {
-    const im = $("img", fl);
-    $$("[data-ix-img]").forEach(row => {
-      row.addEventListener("mouseenter", () => { im.src = row.dataset.ixImg; fl.classList.add("on"); });
-      row.addEventListener("mouseleave", () => fl.classList.remove("on"));
-    });
-    fl.parentElement.addEventListener("mousemove", e => {
-      const r = fl.parentElement.getBoundingClientRect();
-      fl.style.transform = `translate(${e.clientX - r.left + 24}px, ${e.clientY - r.top - 140}px) rotate(-3deg)`;
-    });
-  }
 
   /* ---------- gallery dots (mobile) ---------- */
   $$("[data-gallery]").forEach(g => {
@@ -275,6 +273,27 @@
     catch (err) { toast(err?.description || "This option is sold out"); }
     b.classList.remove("loading");
   });
+
+  /* ---------- smooth reveal on scroll ---------- */
+  const REVEAL = [
+    ".section-title", ".card", ".the-set-media", ".the-set-body", ".split-media", ".split-body",
+    ".insta-grid > *", ".faq .acc", ".features > div", ".pdp-body", ".gallery-item",
+    ".news-form", ".footer-cols", ".page-wrap > *"
+  ].join(",");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    }), { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    const groups = new Map();
+    $$(REVEAL).forEach(el => {
+      // stagger siblings in the same row (cards, insta photos, faq rows)
+      const p = el.parentElement, i = groups.get(p) || 0; groups.set(p, i + 1);
+      el.style.setProperty("--d", `${Math.min(i, 6) * 0.08}s`);
+      el.setAttribute("data-reveal", "");
+      io.observe(el);
+    });
+  }
 
   /* ---------- init ---------- */
   $$("[data-product]").forEach(update);

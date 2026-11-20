@@ -19,8 +19,6 @@
     {%- elsif product.compare_at_price > product.price -%}<span class="tag tag-abs">Sale</span>{%- endif -%}
   </a>
   <div class="card-info">
-    {%- capture code -%}{% render 'product-meta', product: product, kind: 'code' %}{%- endcapture -%}
-    {%- if code != blank -%}<span class="mono card-code">{{ code }}</span>{%- endif -%}
     <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
     <div class="price">
       {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
