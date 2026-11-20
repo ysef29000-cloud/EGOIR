@@ -33,6 +33,8 @@
   {%- if product.media.size > 1 -%}<div class="gallery-dots" data-gallery-dots aria-hidden="true">{%- for m in product.media -%}<i></i>{%- endfor -%}</div>{%- endif -%}
 
   <div class="pdp-body">
+    {%- capture code -%}{% render 'product-meta', product: product, kind: 'code' %}{%- endcapture -%}
+    <p class="mono pdp-code">{% if code != blank %}{{ code }}{% else %}{{ product.type }}{% endif %}</p>
     <h1>{{ product.title }}</h1>
     {% render 'price', product: product, variant: v %}
 
@@ -47,6 +49,9 @@
         {%- for block in section.blocks -%}{%- if block.type == 'point' -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}
       </ul>
     {%- endform -%}
+
+    {%- capture specs -%}{% render 'product-meta', product: product, kind: 'specs' %}{%- endcapture -%}
+    {%- if specs != blank -%}<ul class="specs mono">{{ specs }}</ul>{%- endif -%}
 
     {%- if partner -%}{% render 'set-offer', partner: partner %}{%- endif -%}
 

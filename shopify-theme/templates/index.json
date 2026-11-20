@@ -1,38 +1,44 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "stage": {
+      "type": "set-stage",
+      "settings": {}
+    },
+    "index": {
+      "type": "product-index",
       "settings": {
-        "title": "New drop",
-        "button_label": "Shop now",
-        "height": "full"
+        "title": "Index",
+        "show_set": true
       }
     },
-    "shop": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "New in",
-        "columns": "4",
-        "limit": 8,
-        "show_all": false
-      }
-    },
-    "set": {
-      "type": "the-set",
-      "settings": {
-        "title": "The set",
-        "eyebrow": "Hoodie + pants",
-        "text": "Any colour, any size. 20% off both."
-      }
-    },
-    "story": {
-      "type": "image-text",
-      "settings": {
-        "title": "Made to be worn, not explained.",
-        "text": "<p>Heavy fabric. Clean lines. Nothing extra.</p>",
-        "button_label": "Shop the collection",
-        "flip": true
-      }
+    "lookbook": {
+      "type": "lookbook",
+      "settings": {},
+      "blocks": {
+        "l1": {
+          "type": "image",
+          "settings": {
+            "caption": "Hoodie — Iron"
+          }
+        },
+        "l2": {
+          "type": "image",
+          "settings": {
+            "caption": "Pants — Beige"
+          }
+        },
+        "l3": {
+          "type": "image",
+          "settings": {
+            "caption": "The set — Black"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3"
+      ]
     },
     "insta": {
       "type": "instagram",
@@ -77,10 +83,9 @@
     }
   },
   "order": [
-    "hero",
-    "shop",
-    "set",
-    "story",
+    "stage",
+    "index",
+    "lookbook",
     "insta",
     "faq"
   ]

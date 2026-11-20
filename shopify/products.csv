@@ -11,7 +11,7 @@ egoir-hoodie,,,,,,,Color,Iron,Size,S,EGOIR-HOODIE-IRON-S,shopify,10,deny,manual,
 egoir-hoodie,,,,,,,Color,Iron,Size,M,EGOIR-HOODIE-IRON-M,shopify,10,deny,manual,1200,,TRUE,TRUE,,
 egoir-hoodie,,,,,,,Color,Iron,Size,L,EGOIR-HOODIE-IRON-L,shopify,10,deny,manual,1200,,TRUE,TRUE,,
 egoir-hoodie,,,,,,,Color,Iron,Size,XL,EGOIR-HOODIE-IRON-XL,shopify,10,deny,manual,1200,,TRUE,TRUE,,
-egoir-pants,EGOIR Pants,<p>Relaxed-fit pants.</p>,EGOIR,Pants,set,TRUE,Color,Black,Size,S,EGOIR-PANTS-BLACK-S,shopify,10,deny,manual,1000,,TRUE,TRUE,,active
+egoir-pants,EGOIR Pants,<p>Relaxed-fit pants.</p>,EGOIR,Pants,"set, code:EG-P01",TRUE,Color,Black,Size,S,EGOIR-PANTS-BLACK-S,shopify,10,deny,manual,1000,,TRUE,TRUE,,active
 egoir-pants,,,,,,,Color,Black,Size,M,EGOIR-PANTS-BLACK-M,shopify,10,deny,manual,1000,,TRUE,TRUE,,
 egoir-pants,,,,,,,Color,Black,Size,L,EGOIR-PANTS-BLACK-L,shopify,10,deny,manual,1000,,TRUE,TRUE,,
 egoir-pants,,,,,,,Color,Black,Size,XL,EGOIR-PANTS-BLACK-XL,shopify,10,deny,manual,1000,,TRUE,TRUE,,

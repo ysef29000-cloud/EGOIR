@@ -94,7 +94,7 @@
       if (st) { const show = EG.lowStock > 0 && v.qty != null && v.qty > 0 && v.qty <= EG.lowStock; st.hidden = !show; if (show) $("[data-stock-qty]", st).textContent = v.qty; }
       // image for this colour
       const vimg = own1(scope, "[data-variant-img]");
-      if (vimg && v.img) { vimg.src = sized(v.img, 500); vimg.removeAttribute("srcset"); }
+      if (vimg && v.img) { vimg.src = sized(v.img, +vimg.dataset.w || 500); vimg.removeAttribute("srcset"); }
       const gal = own1(scope, "[data-gallery]");
       if (gal && v.media && scope._lastMedia !== v.media) {
         const item = $(`[data-media-id="${v.media}"]`, gal);
@@ -161,6 +161,20 @@
     const img = $("[data-card-img]", d.closest("[data-card]"));
     if (img && img.dataset.swapped !== d.dataset.swap) { img.src = d.dataset.swap; img.removeAttribute("srcset"); img.dataset.swapped = d.dataset.swap; }
   });
+
+  /* ---------- product index: image follows the cursor ---------- */
+  const fl = $("[data-ix-float]");
+  if (fl && matchMedia("(hover: hover)").matches) {
+    const im = $("img", fl);
+    $$("[data-ix-img]").forEach(row => {
+      row.addEventListener("mouseenter", () => { im.src = row.dataset.ixImg; fl.classList.add("on"); });
+      row.addEventListener("mouseleave", () => fl.classList.remove("on"));
+    });
+    fl.parentElement.addEventListener("mousemove", e => {
+      const r = fl.parentElement.getBoundingClientRect();
+      fl.style.transform = `translate(${e.clientX - r.left + 24}px, ${e.clientY - r.top - 140}px) rotate(-3deg)`;
+    });
+  }
 
   /* ---------- gallery dots (mobile) ---------- */
   $$("[data-gallery]").forEach(g => {

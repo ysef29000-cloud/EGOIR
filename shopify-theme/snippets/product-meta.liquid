@@ -1,0 +1,6 @@
+{%- comment -%} Outputs a product's code (tag "code:EG-H01") or spec lines (tags "spec:..."). Use: render 'product-meta', product: p, kind: 'code' | 'specs' {%- endcomment -%}
+{%- if kind == 'code' -%}
+  {%- for t in product.tags -%}{%- if t contains 'code:' -%}{{ t | remove_first: 'code:' | strip }}{%- break -%}{%- endif -%}{%- endfor -%}
+{%- else -%}
+  {%- for t in product.tags -%}{%- if t contains 'spec:' -%}<li>{{ t | remove_first: 'spec:' | strip }}</li>{%- endif -%}{%- endfor -%}
+{%- endif -%}
