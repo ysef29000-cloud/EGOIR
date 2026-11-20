@@ -3,15 +3,52 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "p1": { "type": "point", "settings": { "text": "Cash on delivery available" } },
-        "p2": { "type": "point", "settings": { "text": "100 EGP shipping, anywhere in Egypt" } },
-        "t1": { "type": "tab", "settings": { "title": "Shipping & delivery", "text": "<p>We ship all over Egypt for 100 EGP. Pay cash when your order arrives.</p>" } },
-        "t2": { "type": "tab", "settings": { "title": "Size guide", "text": "<p>S · M · L · XL — edit this tab with your measurements.</p>" } }
+        "p1": {
+          "type": "point",
+          "settings": {
+            "text": "Cash on delivery available"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "text": "100 EGP shipping, anywhere in Egypt"
+          }
+        },
+        "t1": {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping & delivery",
+            "text": "<p>We ship all over Egypt for 100 EGP. Pay cash when your order arrives.</p>"
+          }
+        },
+        "t2": {
+          "type": "tab",
+          "settings": {
+            "title": "Size guide",
+            "text": "<p>S · M · L · XL — edit this tab with your measurements.</p>"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "t1", "t2"],
+      "block_order": [
+        "p1",
+        "p2",
+        "t1",
+        "t2"
+      ],
       "settings": {}
     },
-    "more": { "type": "featured-collection", "settings": { "title": "The drop", "limit": 4, "columns": "2" } }
+    "more": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "You may also like",
+        "limit": 4,
+        "columns": "4"
+      }
+    }
   },
-  "order": ["main", "more"]
+  "order": [
+    "main",
+    "more"
+  ]
 }

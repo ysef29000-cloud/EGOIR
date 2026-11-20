@@ -1,36 +1,62 @@
+{%- liquid
+  assign ig = section.settings.instagram
+  assign tt = section.settings.tiktok
+  assign fb = section.settings.facebook
+-%}
 <footer class="footer">
-  <div class="footer-top">
-    <div class="footer-news">
-      <h3>Get in first.</h3>
-      <p>Drops and offers before anyone else.</p>
-      {%- form 'customer', class: 'news-form' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        {%- if form.posted_successfully? -%}<p class="ok">Thanks for subscribing.</p>{%- endif -%}
-        <div class="inline-form">
-          <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address" required>
-          <button type="submit" class="btn btn-light">I'm in</button>
-        </div>
-      {%- endform -%}
-    </div>
-    <div class="footer-links">
+  {%- if section.settings.newsletter -%}
+    {%- form 'customer', class: 'news-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}<p class="news-ok">Thanks — you're on the list.</p>{%- endif -%}
+      <label class="news-row">
+        <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address" required>
+        <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h17M14 6l6 6-6 6"/></svg></button>
+      </label>
+    {%- endform -%}
+  {%- endif -%}
+
+  <div class="footer-cols">
+    <div class="footer-col">
+      <p class="footer-head">{{ section.settings.menu.title | default: 'Links' }}</p>
       {%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
     </div>
-    <div class="footer-links">
-      {%- if settings.instagram != blank -%}<a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
-      {%- if settings.tiktok != blank -%}<a href="{{ settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
-      {%- if settings.facebook != blank -%}<a href="{{ settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+    <div class="footer-col">
+      <p class="footer-head">Follow us</p>
+      <div class="socials">
+        {%- if ig != blank or request.design_mode -%}
+        <a href="{{ ig | default: '#' }}" target="_blank" rel="noopener" aria-label="Instagram"{% if ig == blank %} class="is-empty" title="Add your Instagram link in the footer settings"{% endif %}>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        {%- endif -%}
+        {%- if tt != blank or request.design_mode -%}
+        <a href="{{ tt | default: '#' }}" target="_blank" rel="noopener" aria-label="TikTok"{% if tt == blank %} class="is-empty" title="Add your TikTok link in the footer settings"{% endif %}>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M16.6 3c.3 2.3 1.6 3.8 3.9 4v2.6a7 7 0 0 1-3.9-1.2v6.3c0 3.2-2.4 5.8-5.8 5.8A5.6 5.6 0 0 1 5.2 15c0-3.6 3.3-6.1 6.7-5.4v2.8c-1.6-.5-3.9.4-3.9 2.6 0 1.6 1.3 2.8 2.8 2.8 1.7 0 3-1.1 3-3.3V3h2.8Z"/></svg>
+        </a>
+        {%- endif -%}
+        {%- if fb != blank -%}
+        <a href="{{ fb }}" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9Z"/></svg>
+        </a>
+        {%- endif -%}
+      </div>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <div class="logo">{{ shop.name }}</div>
-    <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.note != blank %} · {{ section.settings.note }}{% endif %}</small>
+    <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}</small>
+    {%- if section.settings.note != blank -%}<small>{{ section.settings.note }}</small>{%- endif -%}
   </div>
 </footer>
 {% schema %}
 {
   "name": "Footer",
   "settings": [
+    { "type": "checkbox", "id": "newsletter", "label": "Show email sign-up", "default": true },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" },
+    { "type": "header", "content": "Social" },
+    { "type": "url", "id": "instagram", "label": "Instagram link" },
+    { "type": "url", "id": "tiktok", "label": "TikTok link" },
+    { "type": "url", "id": "facebook", "label": "Facebook link (optional)" },
     { "type": "text", "id": "note", "label": "Small note", "default": "Cash on delivery all over Egypt" }
   ]
 }

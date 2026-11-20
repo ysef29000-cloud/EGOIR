@@ -10,27 +10,65 @@
   {
     "name": "The set (hoodie + pants)",
     "settings": [
-      { "type": "paragraph", "content": "Customers who buy one item are offered the other at a set discount. The discount itself must also be created in Discounts (see the README). Leave empty to use the products with handles egoir-hoodie and egoir-pants." },
-      { "type": "product", "id": "set_product_1", "label": "Set item 1 (hoodie)" },
-      { "type": "product", "id": "set_product_2", "label": "Set item 2 (pants)" },
-      { "type": "range", "id": "set_discount", "label": "Set discount", "min": 0, "max": 50, "step": 1, "unit": "%", "default": 20 }
+      {
+        "type": "paragraph",
+        "content": "Customers who buy one item are offered the other at a set discount. The discount itself must also be created in Discounts (see the README). Leave empty to use the products with handles egoir-hoodie and egoir-pants."
+      },
+      {
+        "type": "product",
+        "id": "set_product_1",
+        "label": "Set item 1 (hoodie)"
+      },
+      {
+        "type": "product",
+        "id": "set_product_2",
+        "label": "Set item 2 (pants)"
+      },
+      {
+        "type": "range",
+        "id": "set_discount",
+        "label": "Set discount",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "%",
+        "default": 20
+      }
     ]
   },
   {
     "name": "Sales",
     "settings": [
-      { "type": "number", "id": "free_shipping_over", "label": "Free shipping over (EGP)", "default": 0, "info": "0 hides the free-shipping bar. Must match your rule in Settings → Shipping." },
-      { "type": "number", "id": "low_stock", "label": "Show \"Only X left\" when stock is at or below", "default": 5, "info": "0 to turn off. Uses your real inventory." },
-      { "type": "text", "id": "whatsapp", "label": "WhatsApp number", "info": "International format, e.g. 201012345678. Leave empty to hide the button." }
+      {
+        "type": "number",
+        "id": "free_shipping_over",
+        "label": "Free shipping over (EGP)",
+        "default": 0,
+        "info": "0 hides the free-shipping bar. Must match your rule in Settings → Shipping."
+      },
+      {
+        "type": "number",
+        "id": "low_stock",
+        "label": "Show \"Only X left\" when stock is at or below",
+        "default": 5,
+        "info": "0 to turn off. Uses your real inventory."
+      },
+      {
+        "type": "text",
+        "id": "whatsapp",
+        "label": "WhatsApp number",
+        "info": "International format, e.g. 201012345678. Leave empty to hide the button."
+      }
     ]
   },
   {
     "name": "Brand",
     "settings": [
-      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
-      { "type": "url", "id": "instagram", "label": "Instagram" },
-      { "type": "url", "id": "tiktok", "label": "TikTok" },
-      { "type": "url", "id": "facebook", "label": "Facebook" }
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
     ]
   }
 ]

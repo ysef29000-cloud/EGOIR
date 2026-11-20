@@ -1,26 +1,87 @@
 {
   "sections": {
-    "hero": { "type": "hero", "settings": { "eyebrow": "EGOIR — Drop 01", "title": "Own it.", "button_label": "Shop the drop" } },
-    "features": {
-      "type": "features",
-      "blocks": {
-        "f1": { "type": "item", "settings": { "title": "Cash on delivery", "text": "Pay when it lands." } },
-        "f2": { "type": "item", "settings": { "title": "100 EGP shipping", "text": "Anywhere in Egypt." } },
-        "f3": { "type": "item", "settings": { "title": "20% off the set", "text": "Hoodie + pants. Done." } }
-      },
-      "block_order": ["f1", "f2", "f3"]
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "title": "New drop",
+        "button_label": "Shop now",
+        "height": "full"
+      }
     },
-    "shop": { "type": "featured-collection", "settings": { "title": "The drop", "columns": "2" } },
-    "set": { "type": "the-set", "settings": {} },
+    "shop": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New in",
+        "columns": "4",
+        "limit": 8,
+        "show_all": false
+      }
+    },
+    "set": {
+      "type": "the-set",
+      "settings": {
+        "title": "The set",
+        "eyebrow": "Hoodie + pants",
+        "text": "Any colour, any size. 20% off both."
+      }
+    },
+    "story": {
+      "type": "image-text",
+      "settings": {
+        "title": "Made to be worn, not explained.",
+        "text": "<p>Heavy fabric. Clean lines. Nothing extra.</p>",
+        "button_label": "Shop the collection",
+        "flip": true
+      }
+    },
+    "insta": {
+      "type": "instagram",
+      "settings": {
+        "title": "Follow us",
+        "button": "Follow us"
+      }
+    },
     "faq": {
       "type": "faq",
-      "blocks": {
-        "q1": { "type": "q", "settings": { "q": "How do I pay?", "a": "<p>Cash, when it arrives. Anywhere in Egypt.</p>" } },
-        "q2": { "type": "q", "settings": { "q": "How much is shipping?", "a": "<p>100 EGP to any address in Egypt.</p>" } },
-        "q3": { "type": "q", "settings": { "q": "How does the set discount work?", "a": "<p>Hoodie + pants, any colours, any sizes: 20% off both. Every pair in your bag counts.</p>" } }
+      "settings": {
+        "title": "FAQ"
       },
-      "block_order": ["q1", "q2", "q3"]
+      "blocks": {
+        "q1": {
+          "type": "q",
+          "settings": {
+            "q": "How do I pay?",
+            "a": "<p>Cash on delivery, anywhere in Egypt.</p>"
+          }
+        },
+        "q2": {
+          "type": "q",
+          "settings": {
+            "q": "How much is shipping?",
+            "a": "<p>100 EGP to any address in Egypt.</p>"
+          }
+        },
+        "q3": {
+          "type": "q",
+          "settings": {
+            "q": "How does the set discount work?",
+            "a": "<p>Hoodie + pants in any colours and sizes: 20% off both. Every pair in your bag counts.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ]
     }
   },
-  "order": ["hero", "features", "shop", "set", "faq"]
+  "order": [
+    "hero",
+    "shop",
+    "set",
+    "story",
+    "insta",
+    "faq"
+  ]
 }

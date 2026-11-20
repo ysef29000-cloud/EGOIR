@@ -11,11 +11,12 @@
   {%- else -%}
     {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-img ph' }}
   {%- endif -%}
+  {%- if section.settings.title != blank or section.settings.button_label != blank -%}
   <div class="hero-inner">
-    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-    {%- if section.settings.title != blank -%}<h1>{{ section.settings.title }}</h1>{%- endif -%}
+    {%- if section.settings.title != blank -%}<p class="hero-title">{{ section.settings.title }}</p>{%- endif -%}
     {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#shop' }}" class="btn btn-light">{{ section.settings.button_label }}</a>{%- endif -%}
   </div>
+  {%- endif -%}
 </section>
 {% schema %}
 {
@@ -24,9 +25,8 @@
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (optional)" },
     { "type": "select", "id": "height", "label": "Height", "options": [ { "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" } ], "default": "full" },
-    { "type": "text", "id": "eyebrow", "label": "Small text", "default": "Drop 01" },
-    { "type": "text", "id": "title", "label": "Heading", "default": "Own it." },
-    { "type": "text", "id": "button_label", "label": "Button", "default": "Shop the drop" },
+    { "type": "text", "id": "title", "label": "Text (optional)", "default": "New drop" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Shop now" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],
   "presets": [ { "name": "Hero image" } ]

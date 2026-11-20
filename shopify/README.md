@@ -35,3 +35,5 @@ Discounts ← Create discount ← **Buy X get Y**
 - **Hero image:** صورة الموديل.
 - **The set:** صورة لابس الطقم.
 - **Theme settings ← Sales:** رقم الواتساب.
+- **Footer:** لينك الإنستجرام والتيك توك (الأيقونات بتظهر تحت خالص).
+- **Instagram gallery:** ضيف لحد 6 صور من الإنستا + اللينك.
