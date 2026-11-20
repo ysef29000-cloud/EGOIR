@@ -1,5 +1,5 @@
 Handle,Title,Body (HTML),Vendor,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Image Src,Status
-egoir-hoodie,EGOIR Hoodie,"<p>Heavyweight hoodie, relaxed fit.</p>",EGOIR,Hoodies,set,TRUE,Color,Black,Size,S,EGOIR-HOODIE-BLACK-S,shopify,10,deny,manual,1200,,TRUE,TRUE,,active
+egoir-hoodie,EGOIR Hoodie,"<p>Heavyweight hoodie, relaxed fit.</p>",EGOIR,Hoodies,"set, code:EG-H01",TRUE,Color,Black,Size,S,EGOIR-HOODIE-BLACK-S,shopify,10,deny,manual,1200,,TRUE,TRUE,,active
 egoir-hoodie,,,,,,,Color,Black,Size,M,EGOIR-HOODIE-BLACK-M,shopify,10,deny,manual,1200,,TRUE,TRUE,,
 egoir-hoodie,,,,,,,Color,Black,Size,L,EGOIR-HOODIE-BLACK-L,shopify,10,deny,manual,1200,,TRUE,TRUE,,
 egoir-hoodie,,,,,,,Color,Black,Size,XL,EGOIR-HOODIE-BLACK-XL,shopify,10,deny,manual,1200,,TRUE,TRUE,,
